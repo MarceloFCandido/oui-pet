@@ -1,0 +1,31 @@
+@import url("../../constants.css");
+
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    min-width: 100vw;
+    min-height: 10vh;
+
+    background-color: var(--color-primary);
+}
+
+header option[value="bitcoin"] {
+    background-image: url('../../assets/bitcoin.svg');
+}
+
+header option[value="ethereum"] {
+    background-image: url('../../assets/ethereum.svg');
+}
+
+header option[value="ripple"] {
+    background-image: url('../../assets/ripple.svg');
+}
+
+header .pesquisa {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
