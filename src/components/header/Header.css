@@ -8,6 +8,10 @@ header {
     background-color: var(--color-primary);
 }
 
+header img {
+    max-width: 6vh;
+}
+
 header .pesquisa {
     display: flex;
     justify-content: space-around;
