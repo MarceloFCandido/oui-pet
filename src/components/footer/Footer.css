@@ -1,10 +1,7 @@
 @import url("../../constants.css");
 
 footer {
-    min-width: 100vw;
-    max-height: 20vh;
     background-color: var(--color-primary);
-
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -26,5 +23,5 @@ footer .logo {
 }
 
 footer .logo img {
-    max-height: 20vh;
+    max-height: 17vh;
 }
