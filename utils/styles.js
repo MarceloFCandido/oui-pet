@@ -15,6 +15,8 @@ const useStyles = makeStyles({
     minHeight: '80vh',
   },
   footer: {
+    backgroundColor: '#BF0045',
+    color: '#fff',
     textAlign: 'center',
     marginTop: 10,
   },

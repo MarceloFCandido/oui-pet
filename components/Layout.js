@@ -7,6 +7,7 @@ import {
   Container,
   CssBaseline,
   createTheme,
+  Grid,
   Link,
   Toolbar,
   ThemeProvider,
@@ -58,8 +59,8 @@ export default function Layout({ title, description, children }) {
                   src="/images/logo.svg"
                   layout="intrinsic"
                   alt="logomarca. Garçon francês com pano na mão."
-                  width={100}
-                  height={138.27}
+                  width={60}
+                  height={79.135}
                 />
               </Link>
             </NextLink>
@@ -71,8 +72,8 @@ export default function Layout({ title, description, children }) {
                     src="/images/carrinho.svg"
                     layout="intrinsic"
                     alt="imagem de um carrinho de compra"
-                    width={102}
-                    height={72}
+                    width={60}
+                    height={47}
                   />
                 </Link>
               </NextLink>
@@ -84,7 +85,20 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>Contato</Typography>
+          <Grid container justifyContent="flex-end">
+            <Grid item md={8}>
+              <h1>Contato</h1>
+            </Grid>
+            <Grid item md={2}>
+              <Image
+                src="/images/logo-rodape.svg"
+                alt="imagem da logo do oui pet. Garçon françês segurando um pano na mão."
+                width={80}
+                height={100.56}
+                layout="intrinsic"
+              />
+            </Grid>
+          </Grid>
         </footer>
       </ThemeProvider>
     </div>
