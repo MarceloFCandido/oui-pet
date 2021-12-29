@@ -2,6 +2,7 @@ const data = {
   products: [
     {
       name: 'Casinha de cachorro',
+      slug: 'casinha-cachorro',
       category: 'Casa',
       image: '/images/casinha-cao.jpg',
       price: 80,
@@ -13,6 +14,7 @@ const data = {
     },
     {
       name: 'Casinha de hamister',
+      slug: 'casinha-hamister',
       category: 'Casa',
       image: '/images/casinha-hamister.jpg',
       price: 20,
@@ -24,6 +26,7 @@ const data = {
     },
     {
       name: 'Arranhador felino',
+      slug: 'arranhador-felino',
       category: 'brinquedo',
       image: '/images/aranhador.jpg',
       price: 10,
@@ -35,6 +38,7 @@ const data = {
     },
     {
       name: 'Mordedor canino',
+      slug: 'mordedor-canino',
       category: 'brinquedo',
       image: '/images/mordedor.jpg',
       price: 8,
@@ -46,6 +50,7 @@ const data = {
     },
     {
       name: 'Porta ração',
+      slug: 'porta-racao',
       category: 'brinquedo',
       image: '/images/bolinha-racao.jpg',
       price: 10,
@@ -57,6 +62,7 @@ const data = {
     },
     {
       name: 'Casa para felinos arranhar',
+      slug: 'casa-felino-arranhador',
       category: 'brinquedo',
       image: '/images/casa-arranhadora.jpg',
       price: 50,
