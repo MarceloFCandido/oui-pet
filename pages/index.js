@@ -23,7 +23,7 @@ export default function Home() {
           {data.products.map((product) => (
             <Grid item md={4} key={product.name}>
               <Card>
-                <NextLink href={`/product/${product.slug}`} passHref>
+                <NextLink href={`/produto/${product.slug}`} passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"
