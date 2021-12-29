@@ -1,3 +1,7 @@
+# Oui Pet
+
+Projeto final da discilina de Programação Web 2021/2 do CEFET-MG campus 2.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
