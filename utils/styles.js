@@ -24,6 +24,8 @@ const useStyles = makeStyles({
     color: '#fff',
     textAlign: 'center',
     marginTop: 10,
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   section: {
     marginTop: 10,

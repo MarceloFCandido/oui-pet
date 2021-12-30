@@ -8,7 +8,6 @@ import {
   Container,
   CssBaseline,
   createTheme,
-  Grid,
   Link,
   List,
   ListItem,
@@ -122,20 +121,18 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Grid container spacing={1} justifyContent="flex-end">
-            <Grid item md={8}>
-              <h1>Contato</h1>
-            </Grid>
-            <Grid item md={2}>
-              <Image
-                src="/images/logo-rodape.svg"
-                alt="imagem da logo do oui pet. Garçon françês segurando um pano na mão."
-                width={80}
-                height={100.56}
-                layout="intrinsic"
-              />
-            </Grid>
-          </Grid>
+          <div></div>
+          <div>
+            <h1>Contato</h1>
+          </div>
+          <div>
+            <Image
+              src="/images/logo-rodape.svg"
+              alt="imagem da logo do oui pet. Garçon françês segurando um pano na mão."
+              width={80}
+              height={100.56}
+            />
+          </div>
         </footer>
       </ThemeProvider>
     </div>
