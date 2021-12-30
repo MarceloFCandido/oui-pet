@@ -10,6 +10,8 @@ import {
   createTheme,
   Grid,
   Link,
+  List,
+  ListItem,
   Switch,
   Toolbar,
   ThemeProvider,
@@ -69,7 +71,6 @@ export default function Layout({ title, description, children }) {
               <Link>
                 <Image
                   src="/images/logo.svg"
-                  layout="intrinsic"
                   alt="logomarca. Garçon francês com pano na mão."
                   width={60}
                   height={79.135}
@@ -78,36 +79,44 @@ export default function Layout({ title, description, children }) {
             </NextLink>
             <div className={classes.grow}></div>
             <div>
-              <Switch checked={darkMode} onChange={darkModeChangeHandler} />
-              <NextLink href="/carrinho" passHref>
-                <Link>
-                  {cart.cartItems.length > 0 ? (
-                    <Badge
-                      color="secondary"
-                      badgeContent={cart.cartItems.length}
-                    >
-                      <Image
-                        src="/images/carrinho.svg"
-                        layout="intrinsic"
-                        alt="imagem de um carrinho de compra"
-                        width={60}
-                        height={47}
-                      />
-                    </Badge>
-                  ) : (
-                    <Image
-                      src="/images/carrinho.svg"
-                      layout="intrinsic"
-                      alt="imagem de um carrinho de compra"
-                      width={60}
-                      height={47}
-                    />
-                  )}
-                </Link>
-              </NextLink>
-              <NextLink href="/login" passHref>
-                <Link>Login</Link>
-              </NextLink>
+              <List className={classes.navRight}>
+                <ListItem>
+                  <Switch checked={darkMode} onChange={darkModeChangeHandler} />
+                </ListItem>
+                <ListItem>
+                  <div>
+                    <NextLink href="/carrinho" passHref>
+                      <Link>
+                        {cart.cartItems.length > 0 ? (
+                          <Badge
+                            color="secondary"
+                            badgeContent={cart.cartItems.length}
+                          >
+                            <Image
+                              src="/images/carrinho.svg"
+                              alt="imagem de um carrinho de compra"
+                              width={60}
+                              height={47}
+                            />
+                          </Badge>
+                        ) : (
+                          <Image
+                            src="/images/carrinho.svg"
+                            alt="imagem de um carrinho de compra"
+                            width={60}
+                            height={47}
+                          />
+                        )}
+                      </Link>
+                    </NextLink>
+                  </div>
+                </ListItem>
+                <ListItem>
+                  <NextLink href="/login" passHref>
+                    <Link>Login</Link>
+                  </NextLink>
+                </ListItem>
+              </List>
             </div>
           </Toolbar>
         </AppBar>

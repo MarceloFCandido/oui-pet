@@ -8,6 +8,11 @@ const useStyles = makeStyles({
       marginLeft: 10,
     },
   },
+  navRight: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
+  },
   grow: {
     flexGrow: 1,
   },
