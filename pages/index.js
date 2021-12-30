@@ -20,7 +20,7 @@ import db from '../utils/db';
 
 export default function Home(props) {
   const router = useRouter();
-  const { state, dispath } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { products } = props;
   const addToCartHandler = async (product) => {
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
@@ -32,7 +32,7 @@ export default function Home(props) {
       return;
     }
 
-    dispath({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
     router.push('/carrinho');
   };
   return (

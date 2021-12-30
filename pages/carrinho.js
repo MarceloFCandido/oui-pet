@@ -45,7 +45,7 @@ function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    router.push('/pagamento');
+    router.push('/comprar');
   };
 
   return (
@@ -140,7 +140,7 @@ function CartScreen() {
                     fullWidth
                     onClick={checkoutHandler}
                   >
-                    Pagamento
+                    Comprar
                   </Button>
                 </ListItem>
               </List>

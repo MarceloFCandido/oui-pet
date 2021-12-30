@@ -28,7 +28,7 @@ export default function Login() {
 
   const router = useRouter();
 
-  const { redirect } = router.query; // login?redirect=/pagamento
+  const { redirect } = router.query; // login?redirect=/comprar
 
   const { state, dispatch } = useContext(Store);
 
