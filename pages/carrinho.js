@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
+import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import {
@@ -21,11 +23,24 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function CartScreen() {
-  const { state } = useContext(Store);
+function CartScreen() {
+  const { state, dispatch } = useContext(Store);
+
   const {
     cart: { cartItems },
   } = state;
+
+  const updateCartHandler = async (item, quantity) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Desculpe, produto indisponível!');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+  };
+  const removeItemHandler = (item) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
 
   return (
     <Layout title="Carrinho de Compra">
@@ -73,7 +88,12 @@ export default function CartScreen() {
                         </NextLink>
                       </TableCell>
                       <TableCell align="right">
-                        <Select value={item.quantity}>
+                        <Select
+                          value={item.quantity}
+                          onChange={(e) =>
+                            updateCartHandler(item, e.target.value)
+                          }
+                        >
                           {[...Array(item.countInStock).keys()].map((x) => (
                             <MenuItem key={x + 1} value={x + 1}>
                               {x + 1}
@@ -83,7 +103,11 @@ export default function CartScreen() {
                       </TableCell>
                       <TableCell align="right">R$ {item.price}</TableCell>
                       <TableCell align="right">
-                        <Button variant="contained" color="secondary">
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => removeItemHandler(item)}
+                        >
                           x
                         </Button>
                       </TableCell>
@@ -93,13 +117,13 @@ export default function CartScreen() {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid md={3} xs={12}>
+          <Grid item md={3} xs={12}>
             <Card>
               <List>
                 <ListItem>
                   <Typography variant="h2">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : R$
+                    itens) : R$
                     {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
@@ -116,3 +140,5 @@ export default function CartScreen() {
     </Layout>
   );
 }
+
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
