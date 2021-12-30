@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 import Image from 'next/image';
 import {
   AppBar,
+  Badge,
   Container,
   CssBaseline,
   createTheme,
@@ -20,7 +21,7 @@ import Cookies from 'js-cookie';
 
 export default function Layout({ title, description, children }) {
   const { state, dispatch } = useContext(Store);
-  const { darkMode } = state;
+  const { darkMode, cart } = state;
   const theme = createTheme({
     typography: {
       h1: {
@@ -78,15 +79,30 @@ export default function Layout({ title, description, children }) {
             <div className={classes.grow}></div>
             <div>
               <Switch checked={darkMode} onChange={darkModeChangeHandler} />
-              <NextLink href="/cart" passHref>
+              <NextLink href="/carrinho" passHref>
                 <Link>
-                  <Image
-                    src="/images/carrinho.svg"
-                    layout="intrinsic"
-                    alt="imagem de um carrinho de compra"
-                    width={60}
-                    height={47}
-                  />
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                      <Image
+                        src="/images/carrinho.svg"
+                        layout="intrinsic"
+                        alt="imagem de um carrinho de compra"
+                        width={60}
+                        height={47}
+                      />
+                    </Badge>
+                  ) : (
+                    <Image
+                      src="/images/carrinho.svg"
+                      layout="intrinsic"
+                      alt="imagem de um carrinho de compra"
+                      width={60}
+                      height={47}
+                    />
+                  )}
                 </Link>
               </NextLink>
               <NextLink href="/login" passHref>
