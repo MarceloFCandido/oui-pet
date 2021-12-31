@@ -12,10 +12,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { getError } from '../utils/error';
+import Cookies from 'js-cookie';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import useStyles from '../utils/styles';
-import Cookies from 'js-cookie';
 
 export default function Register() {
   const {
@@ -58,10 +59,7 @@ export default function Register() {
       Cookies.set('userInfo', JSON.stringify(data));
       router.push(redirect || '/');
     } catch (err) {
-      enqueueSnackbar(
-        err.response.data ? err.response.data.message : err.message,
-        { variant: 'error' }
-      );
+      enqueueSnackbar(getError(err), { variant: 'error' });
     }
   };
   return (

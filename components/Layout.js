@@ -68,8 +68,12 @@ export default function Layout({ title, description, children }) {
     setAnchorEl(e.currentTarget);
   };
 
-  const loginMenuCloseHandler = () => {
+  const loginMenuCloseHandler = (e, redirect) => {
     setAnchorEl(null);
+
+    if (redirect) {
+      router.push(redirect);
+    }
   };
 
   const logoutClickHandler = () => {
@@ -153,12 +157,27 @@ export default function Layout({ title, description, children }) {
                         open={Boolean(anchorEl)}
                         onClose={loginMenuCloseHandler}
                       >
-                        <MenuItem onClick={loginMenuCloseHandler}>
+                        <MenuItem
+                          onClick={(e) => loginMenuCloseHandler(e, '/perfil')}
+                        >
                           Perfil
                         </MenuItem>
-                        <MenuItem onClick={loginMenuCloseHandler}>
-                          Minha conta
+                        <MenuItem
+                          onClick={(e) =>
+                            loginMenuCloseHandler(e, '/historico-de-pedidos')
+                          }
+                        >
+                          Histórico de Pedidos
                         </MenuItem>
+                        {userInfo.isAdmin && (
+                          <MenuItem
+                            onClick={(e) =>
+                              loginMenuCloseHandler(e, '/admin/painel')
+                            }
+                          >
+                            Painel do Administrador
+                          </MenuItem>
+                        )}
                         <MenuItem onClick={logoutClickHandler}>Sair</MenuItem>
                       </Menu>
                     </>
