@@ -13,6 +13,7 @@
     "@mui/core": "^5.0.0-alpha.54",
     "@mui/material": "^5.2.6",
     "@mui/styles": "^5.2.3",
+    "@paypal/react-paypal-js": "^7.5.0",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.1",
