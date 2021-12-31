@@ -1,25 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
 import {
   AppBar,
   Badge,
+  Box,
   Button,
   Container,
   CssBaseline,
   createTheme,
+  Divider,
+  Drawer,
+  IconButton,
   Link,
   List,
   ListItem,
+  ListItemText,
   Menu,
   MenuItem,
   Switch,
   Toolbar,
   ThemeProvider,
+  Typography,
 } from '@mui/material';
-
+import MenuIcon from '@mui/icons-material/Menu';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { getError } from '../utils/error';
 import useStyles from '../utils/styles';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
@@ -55,6 +65,31 @@ export default function Layout({ title, description, children }) {
   });
 
   const classes = useStyles();
+
+  const [sidbarVisible, setSidebarVisible] = useState(false);
+  const sidebarOpenHandler = () => {
+    setSidebarVisible(true);
+  };
+  const sidebarCloseHandler = () => {
+    setSidebarVisible(false);
+  };
+
+  const [categories, setCategories] = useState([]);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/categories`);
+      setCategories(data);
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: 'error' });
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const darkModeChangeHandler = () => {
     dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
@@ -94,17 +129,65 @@ export default function Layout({ title, description, children }) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar position="static" className={classes.navbar}>
-          <Toolbar>
-            <NextLink href="/" passHref>
-              <Link>
-                <Image
-                  src="/images/logo.svg"
-                  alt="logomarca. Garçon francês com pano na mão."
-                  width={60}
-                  height={79.135}
-                />
-              </Link>
-            </NextLink>
+          <Toolbar className={classes.toolbar}>
+            <Box display="flex" alignItems="center">
+              <IconButton
+                edge="start"
+                aria-label="open drawer"
+                onClick={sidebarOpenHandler}
+              >
+                <MenuIcon className={classes.navbarButton} />
+              </IconButton>
+              <NextLink href="/" passHref>
+                <Link>
+                  <Image
+                    src="/images/logo.svg"
+                    alt="logomarca. Garçon francês com pano na mão."
+                    width={60}
+                    height={79.135}
+                  />
+                </Link>
+              </NextLink>
+            </Box>
+            <Drawer
+              anchor="left"
+              open={sidbarVisible}
+              onClose={sidebarCloseHandler}
+            >
+              <List>
+                <ListItem>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Typography>Categorias</Typography>
+                    <IconButton
+                      aria-label="close"
+                      onClick={sidebarCloseHandler}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </Box>
+                </ListItem>
+                <Divider light />
+                {categories.map((category) => (
+                  <NextLink
+                    key={category}
+                    href={`/pesquisar?category=${category}`}
+                    passHref
+                  >
+                    <ListItem
+                      button
+                      component="a"
+                      onClick={sidebarCloseHandler}
+                    >
+                      <ListItemText primary={category}></ListItemText>
+                    </ListItem>
+                  </NextLink>
+                ))}
+              </List>
+            </Drawer>
             <div className={classes.grow}></div>
             <div>
               <List className={classes.navRight}>
@@ -183,7 +266,9 @@ export default function Layout({ title, description, children }) {
                     </>
                   ) : (
                     <NextLink href="/login" passHref>
-                      <Link>Login</Link>
+                      <Link>
+                        <Typography component="span">Login</Typography>
+                      </Link>
                     </NextLink>
                   )}
                 </ListItem>
