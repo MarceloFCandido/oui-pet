@@ -234,7 +234,11 @@ function AdminProducts() {
                                 href={`/admin/produto/${product._id}`}
                                 passHref
                               >
-                                <Button size="small" variant="contained">
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  color="secondary"
+                                >
                                   Editar
                                 </Button>
                               </NextLink>{' '}
@@ -242,6 +246,7 @@ function AdminProducts() {
                                 size="small"
                                 variant="contained"
                                 onClick={() => deleteHandler(product._id)}
+                                color="error"
                               >
                                 Deletar
                               </Button>

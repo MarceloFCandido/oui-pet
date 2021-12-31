@@ -180,7 +180,11 @@ function AdminUsers() {
                                 href={`/admin/usuarios/${user._id}`}
                                 passHref
                               >
-                                <Button size="small" variant="contained">
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  color="secondary"
+                                >
                                   Editar
                                 </Button>
                               </NextLink>{' '}
@@ -188,6 +192,7 @@ function AdminUsers() {
                                 onClick={() => deleteHandler(user._id)}
                                 size="small"
                                 variant="contained"
+                                color="error"
                               >
                                 Deletar
                               </Button>
