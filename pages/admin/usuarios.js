@@ -30,15 +30,10 @@ function reducer(state, action) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true, error: '' };
     case 'FETCH_SUCCESS':
-      return { ...state, loading: false, products: action.payload, error: '' };
+      return { ...state, loading: false, users: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-    case 'CREATE_REQUEST':
-      return { ...state, loadingCreate: true };
-    case 'CREATE_SUCCESS':
-      return { ...state, loadingCreate: false };
-    case 'CREATE_FAIL':
-      return { ...state, loadingCreate: false };
+
     case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true };
     case 'DELETE_SUCCESS':
@@ -52,7 +47,7 @@ function reducer(state, action) {
   }
 }
 
-function AdminProducts() {
+function AdminUsers() {
   const { state } = useContext(Store);
 
   const router = useRouter();
@@ -61,14 +56,12 @@ function AdminProducts() {
 
   const { userInfo } = state;
 
-  const [
-    { loading, error, products, loadingCreate, successDelete, loadingDelete },
-    dispatch,
-  ] = useReducer(reducer, {
-    loading: true,
-    products: [],
-    error: '',
-  });
+  const [{ loading, error, users, successDelete, loadingDelete }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      users: [],
+      error: '',
+    });
 
   useEffect(() => {
     if (!userInfo) {
@@ -79,7 +72,7 @@ function AdminProducts() {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
 
-        const { data } = await axios.get(`/api/admin/products`, {
+        const { data } = await axios.get(`/api/admin/users`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
 
@@ -88,7 +81,6 @@ function AdminProducts() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
     if (successDelete) {
       dispatch({ type: 'DELETE_RESET' });
     } else {
@@ -98,33 +90,7 @@ function AdminProducts() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const createHandler = async () => {
-    if (!window.confirm('Tem certeza?')) {
-      return;
-    }
-
-    try {
-      dispatch({ type: 'CREATE_REQUEST' });
-      const { data } = await axios.post(
-        `/api/admin/products`,
-        {},
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      dispatch({ type: 'CREATE_SUCCESS' });
-
-      enqueueSnackbar('Produto criado com sucesso', { variant: 'success' });
-
-      router.push(`/admin/produto/${data.product._id}`);
-    } catch (err) {
-      dispatch({ type: 'CREATE_FAIL' });
-
-      enqueueSnackbar(getError(err), { variant: 'error' });
-    }
-  };
-
-  const deleteHandler = async (productId) => {
+  const deleteHandler = async (userId) => {
     if (!window.confirm('Tem certeza?')) {
       return;
     }
@@ -132,22 +98,20 @@ function AdminProducts() {
     try {
       dispatch({ type: 'DELETE_REQUEST' });
 
-      await axios.delete(`/api/admin/products/${productId}`, {
+      await axios.delete(`/api/admin/users/${userId}`, {
         headers: { authorization: `Bearer ${userInfo.token}` },
       });
 
       dispatch({ type: 'DELETE_SUCCESS' });
 
-      enqueueSnackbar('Produto deletado com sucesso', { variant: 'success' });
+      enqueueSnackbar('Usuário deletado com sucesso', { variant: 'success' });
     } catch (err) {
       dispatch({ type: 'DELETE_FAIL' });
-
       enqueueSnackbar(getError(err), { variant: 'error' });
     }
   };
-
   return (
-    <Layout title="Produtos">
+    <Layout title="Usuários">
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
@@ -163,12 +127,12 @@ function AdminProducts() {
                 </ListItem>
               </NextLink>
               <NextLink href="/admin/produtos" passHref>
-                <ListItem selected button component="a">
+                <ListItem button component="a">
                   <ListItemText primary="Produtos"></ListItemText>
                 </ListItem>
               </NextLink>
-              <NextLink href="/admin/usuarios" passHref>
-                <ListItem button component="a">
+              <NextLink href="/admin/usuários" passHref>
+                <ListItem selected button component="a">
                   <ListItemText primary="Usuários"></ListItemText>
                 </ListItem>
               </NextLink>
@@ -179,24 +143,10 @@ function AdminProducts() {
           <Card className={classes.section}>
             <List>
               <ListItem>
-                <Grid container alignItems="center">
-                  <Grid item xs={6}>
-                    <Typography component="h1" variant="h1">
-                      Produtos
-                    </Typography>
-                    {loadingDelete && <CircularProgress />}
-                  </Grid>
-                  <Grid align="right" item xs={6}>
-                    <Button
-                      onClick={createHandler}
-                      color="primary"
-                      variant="contained"
-                    >
-                      Criar
-                    </Button>
-                    {loadingCreate && <CircularProgress />}
-                  </Grid>
-                </Grid>
+                <Typography component="h1" variant="h1">
+                  Usuários
+                </Typography>
+                {loadingDelete && <CircularProgress />}
               </ListItem>
 
               <ListItem>
@@ -211,27 +161,23 @@ function AdminProducts() {
                         <TableRow>
                           <TableCell>ID</TableCell>
                           <TableCell>NOME</TableCell>
-                          <TableCell>PREÇO</TableCell>
-                          <TableCell>CATEGORIA</TableCell>
-                          <TableCell>QUANTIDADE</TableCell>
-                          <TableCell>NOTA</TableCell>
+                          <TableCell>EMAIL</TableCell>
+                          <TableCell>É ADMINISTRADOR</TableCell>
                           <TableCell>AÇÕES</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {products.map((product) => (
-                          <TableRow key={product._id}>
+                        {users.map((user) => (
+                          <TableRow key={user._id}>
+                            <TableCell>{user._id.substring(20, 24)}</TableCell>
+                            <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.email}</TableCell>
                             <TableCell>
-                              {product._id.substring(20, 24)}
+                              {user.isAdmin ? 'Sim' : 'Não'}
                             </TableCell>
-                            <TableCell>{product.name}</TableCell>
-                            <TableCell>R$ {product.price}</TableCell>
-                            <TableCell>{product.category}</TableCell>
-                            <TableCell>{product.countInStock}</TableCell>
-                            <TableCell>{product.rating}</TableCell>
                             <TableCell>
                               <NextLink
-                                href={`/admin/produto/${product._id}`}
+                                href={`/admin/usuarios/${user._id}`}
                                 passHref
                               >
                                 <Button size="small" variant="contained">
@@ -239,9 +185,9 @@ function AdminProducts() {
                                 </Button>
                               </NextLink>{' '}
                               <Button
+                                onClick={() => deleteHandler(user._id)}
                                 size="small"
                                 variant="contained"
-                                onClick={() => deleteHandler(product._id)}
                               >
                                 Deletar
                               </Button>
@@ -261,4 +207,4 @@ function AdminProducts() {
   );
 }
 
-export default dynamic(() => Promise.resolve(AdminProducts), { ssr: false });
+export default dynamic(() => Promise.resolve(AdminUsers), { ssr: false });
