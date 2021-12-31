@@ -5,11 +5,11 @@ import {
   List,
   ListItem,
   MenuItem,
+  Rating,
   Select,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
-import Rating from '@mui/lab/Rating';
 import { Pagination } from '@mui/lab';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useRouter } from 'next/router';

@@ -7,9 +7,9 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Rating,
   Typography,
 } from '@mui/material';
-import Rating from '@mui/lab/Rating';
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (

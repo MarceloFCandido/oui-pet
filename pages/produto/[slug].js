@@ -11,10 +11,10 @@ import {
   Link,
   List,
   ListItem,
+  Rating,
   TextField,
   Typography,
 } from '@mui/material';
-import Rating from '@mui/lab/Rating';
 import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
 import useStyles from '../../utils/styles';

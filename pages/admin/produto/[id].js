@@ -366,7 +366,7 @@ function ProductEdit({ params }) {
                     </ListItem>
                     <ListItem>
                       <Button variant="contained" component="label">
-                        Arquivo em anexo
+                        Anexar Arquivo
                         <input
                           type="file"
                           onChange={(e) => uploadHandler(e, 'featuredImage')}
