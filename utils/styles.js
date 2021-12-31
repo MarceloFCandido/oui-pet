@@ -85,6 +85,12 @@ const useStyles = makeStyles((theme) => ({
   sort: {
     marginRight: 5,
   },
+  fullContainer: { height: '100vh' },
+  featuredImage: {
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
 }));
 
 export default useStyles;
