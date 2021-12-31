@@ -16,6 +16,7 @@ import {
   Divider,
   Drawer,
   IconButton,
+  InputBase,
   Link,
   List,
   ListItem,
@@ -29,6 +30,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CancelIcon from '@mui/icons-material/Cancel';
+import SearchIcon from '@mui/icons-material/Search';
 import { getError } from '../utils/error';
 import useStyles from '../utils/styles';
 import { Store } from '../utils/Store';
@@ -87,6 +89,17 @@ export default function Layout({ title, description, children }) {
     }
   };
 
+  const [query, setQuery] = useState('');
+
+  const queryChangeHandler = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/pesquisar?query=${query}`);
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -132,6 +145,7 @@ export default function Layout({ title, description, children }) {
           <Toolbar className={classes.toolbar}>
             <Box display="flex" alignItems="center">
               <IconButton
+                className={classes.menuButton}
                 edge="start"
                 aria-label="open drawer"
                 onClick={sidebarOpenHandler}
@@ -188,7 +202,23 @@ export default function Layout({ title, description, children }) {
                 ))}
               </List>
             </Drawer>
-            <div className={classes.grow}></div>
+            <div className={classes.searchSection}>
+              <form onSubmit={submitHandler} className={classes.searchForm}>
+                <InputBase
+                  name="query"
+                  className={classes.searchInput}
+                  placeholder="Pesquisar"
+                  onChange={queryChangeHandler}
+                />
+                <IconButton
+                  type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </form>
+            </div>
             <div>
               <List className={classes.navRight}>
                 <ListItem>

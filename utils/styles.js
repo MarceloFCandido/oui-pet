@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: '#BF0045',
     '& a': {
@@ -58,6 +58,29 @@ const useStyles = makeStyles({
   toolbar: {
     justifyContent: 'space-between',
   },
-});
+  menuButton: { padding: 0 },
+  searchSection: {
+    display: 'flex',
+  },
+  searchForm: {
+    border: '1px solid #ffffff',
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+  },
+  searchInput: {
+    paddingLeft: 5,
+    color: '#000000',
+    '& ::placeholder': {
+      color: '#606060',
+    },
+  },
+  iconButton: {
+    padding: 5,
+    borderRadius: '0 5px 5px 0',
+    '& span': {
+      color: '#000000',
+    },
+  },
+}));
 
 export default useStyles;
