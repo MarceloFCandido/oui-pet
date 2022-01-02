@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import {
+  Box,
   Button,
   Card,
   Grid,
@@ -54,9 +55,9 @@ function CartScreen() {
         Carrinho de Compra
       </Typography>
       {cartItems.lenght === 0 ? (
-        <div>
+        <Box>
           Carrinho vazio. <NextLink href="/">Ir para loja</NextLink>
-        </div>
+        </Box>
       ) : (
         <Grid container spacing={1}>
           <Grid item md={9} xs={12}>

@@ -14,7 +14,7 @@ import {
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Layout from '../components/Layout';
-import useStyles from '../utils/styles';
+import Form from '../components/Form';
 import { Store } from '../utils/Store';
 import { getError } from '../utils/error';
 
@@ -41,8 +41,6 @@ export default function Login() {
     }
   }, []);
 
-  const classes = useStyles();
-
   const submitHandler = async ({ email, password }) => {
     closeSnackbar();
     try {
@@ -61,7 +59,7 @@ export default function Login() {
 
   return (
     <Layout title="Login">
-      <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
+      <Form onSubmit={handleSubmit(submitHandler)}>
         <Typography component="h1" variant="h1">
           Login
         </Typography>
@@ -136,7 +134,7 @@ export default function Login() {
             </NextLink>
           </ListItem>
         </List>
-      </form>
+      </Form>
     </Layout>
   );
 }

@@ -23,7 +23,7 @@ import { useSnackbar } from 'notistack';
 import { getError } from '../../utils/error';
 import { Store } from '../../utils/Store';
 import Layout from '../../components/Layout';
-import useStyles from '../../utils/styles';
+import classes from '../../utils/classes';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -51,8 +51,6 @@ function AdminUsers() {
   const { state } = useContext(Store);
 
   const router = useRouter();
-
-  const classes = useStyles();
 
   const { userInfo } = state;
 
@@ -114,7 +112,7 @@ function AdminUsers() {
     <Layout title="Usuários">
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <NextLink href="/admin/painel" passHref>
                 <ListItem button component="a">
@@ -140,7 +138,7 @@ function AdminUsers() {
           </Card>
         </Grid>
         <Grid item md={9} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h1" variant="h1">
@@ -153,7 +151,7 @@ function AdminUsers() {
                 {loading ? (
                   <CircularProgress />
                 ) : error ? (
-                  <Typography className={classes.error}>{error}</Typography>
+                  <Typography sx={classes.error}>{error}</Typography>
                 ) : (
                   <TableContainer>
                     <Table>

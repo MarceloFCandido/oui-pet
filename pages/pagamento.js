@@ -15,12 +15,10 @@ import Cookies from 'js-cookie';
 import { Store } from '../utils/Store';
 import Layout from '../components/Layout';
 import CheckoutWizard from '../components/CheckoutWizard';
-import useStyles from '../utils/styles';
+import Form from '../components/Form';
 
 export default function Payment() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const classes = useStyles();
 
   const router = useRouter();
 
@@ -55,7 +53,7 @@ export default function Payment() {
   return (
     <Layout title="Método de Pagamento">
       <CheckoutWizard activeStep={2}></CheckoutWizard>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler}>
         <Typography component="h1" variant="h1">
           Método de Pagamento
         </Typography>
@@ -97,12 +95,13 @@ export default function Payment() {
               type="button"
               variant="contained"
               onClick={() => router.push('/shipping')}
+              color="secondary"
             >
               Voltar
             </Button>
           </ListItem>
         </List>
-      </form>
+      </Form>
     </Layout>
   );
 }

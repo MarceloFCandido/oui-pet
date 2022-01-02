@@ -9,11 +9,9 @@ import Layout from '../components/Layout';
 import Product from '../models/Product';
 import ProductItem from '../components/ProductItem';
 import db from '../utils/db';
-import useStyles from '../utils/styles';
+import classes from '../utils/classes';
 
 export default function Home(props) {
-  const classes = useStyles();
-
   const router = useRouter();
 
   const { state, dispatch } = useContext(Store);
@@ -36,14 +34,14 @@ export default function Home(props) {
 
   return (
     <Layout>
-      <Carousel className={classes.mt1} animation="slide">
+      <Carousel>
         {featuredProducts.map((product) => (
           <NextLink
             key={product._id}
             href={`/produto/${product.slug}`}
             passHref
           >
-            <Link>
+            <Link sx={classes.flex}>
               <img
                 src={product.featuredImage}
                 alt={product.name}

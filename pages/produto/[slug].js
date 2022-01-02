@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import {
+  Box,
   Button,
   Card,
   CircularProgress,
@@ -17,11 +18,12 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
-import useStyles from '../../utils/styles';
+import Form from '../../components/Form';
 import db from '../../utils/db';
 import { getError } from '../../utils/error';
 import Product from '../../models/Product';
 import { Store } from '../../utils/Store';
+import classes from '../../utils/classes';
 
 export default function ProductScreen(props) {
   const router = useRouter();
@@ -31,8 +33,6 @@ export default function ProductScreen(props) {
   const { userInfo } = state;
 
   const { product } = props;
-
-  const classes = useStyles();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -85,7 +85,7 @@ export default function ProductScreen(props) {
   }, []);
 
   if (!product) {
-    return <div>Produto não encontrado!</div>;
+    return <Box>Produto não encontrado!</Box>;
   }
 
   const addToCartHandler = async () => {
@@ -103,14 +103,14 @@ export default function ProductScreen(props) {
   };
 
   return (
-    <Layout title={product.name} description={product.description}>
-      <div className={classes.section}>
+    <Layout title={product.name}>
+      <Box sx={classes.section}>
         <NextLink href="/" passHref>
           <Link>
             <Typography>voltar</Typography>
           </Link>
         </NextLink>
-      </div>
+      </Box>
       <Grid container spacing={1}>
         <Grid item md={6} xs={12}>
           <Image
@@ -194,7 +194,7 @@ export default function ProductScreen(props) {
         {reviews.map((review) => (
           <ListItem key={review._id}>
             <Grid container>
-              <Grid item className={classes.reviewItem}>
+              <Grid item sx={classes.reviewItem}>
                 <Typography>
                   <strong>{review.name}</strong>
                 </Typography>
@@ -209,7 +209,7 @@ export default function ProductScreen(props) {
         ))}
         <ListItem>
           {userInfo ? (
-            <form onSubmit={submitHandler} className={classes.reviewForm}>
+            <Form onSubmit={submitHandler}>
               <List>
                 <ListItem>
                   <Typography variant="h2">Sua Avaliação</Typography>
@@ -245,7 +245,7 @@ export default function ProductScreen(props) {
                   {loading && <CircularProgress></CircularProgress>}
                 </ListItem>
               </List>
-            </form>
+            </Form>
           ) : (
             <Typography variant="h2">
               Por favor{', '}

@@ -22,11 +22,10 @@ import {
   BarElement,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-
 import { getError } from '../../utils/error';
 import { Store } from '../../utils/Store';
 import Layout from '../../components/Layout';
-import useStyles from '../../utils/styles';
+import classes from '../../utils/classes';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -46,8 +45,6 @@ function AdminDashboard() {
   const { state } = useContext(Store);
 
   const router = useRouter();
-
-  const classes = useStyles();
 
   const { userInfo } = state;
 
@@ -80,7 +77,7 @@ function AdminDashboard() {
     <Layout title="Painel do Administrador">
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <NextLink href="/admin/painel" passHref>
                 <ListItem selected button component="a">
@@ -106,13 +103,13 @@ function AdminDashboard() {
           </Card>
         </Grid>
         <Grid item md={9} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 {loading ? (
                   <CircularProgress />
                 ) : error ? (
-                  <Typography className={classes.error}>{error}</Typography>
+                  <Typography sx={classes.error}>{error}</Typography>
                 ) : (
                   <Grid container spacing={5}>
                     <Grid item md={3}>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import {
+  Box,
   Button,
   Card,
   CircularProgress,
@@ -23,9 +24,9 @@ import {
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
-import useStyles from '../../utils/styles';
 import { Store } from '../../utils/Store';
 import { getError } from '../../utils/error';
+import classes from '../../utils/classes';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -65,8 +66,6 @@ function Order({ params }) {
   const orderId = params.id;
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
-  const classes = useStyles();
 
   const router = useRouter();
 
@@ -222,11 +221,11 @@ function Order({ params }) {
       {loading ? (
         <CircularProgress />
       ) : error ? (
-        <Typography className={classes.error}>{error}</Typography>
+        <Typography sx={classes.error}>{error}</Typography>
       ) : (
         <Grid container spacing={1}>
           <Grid item md={9} xs={12}>
-            <Card className={classes.section}>
+            <Card sx={classes.section}>
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
@@ -244,7 +243,7 @@ function Order({ params }) {
                 </ListItem>
               </List>
             </Card>
-            <Card className={classes.section}>
+            <Card sx={classes.section}>
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
@@ -257,7 +256,7 @@ function Order({ params }) {
                 </ListItem>
               </List>
             </Card>
-            <Card className={classes.section}>
+            <Card sx={classes.section}>
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
@@ -314,7 +313,7 @@ function Order({ params }) {
             </Card>
           </Grid>
           <Grid item md={3} xs={12}>
-            <Card className={classes.section}>
+            <Card sx={classes.section}>
               <List>
                 <ListItem>
                   <Typography variant="h2">Resumo do Pedido</Typography>
@@ -358,13 +357,13 @@ function Order({ params }) {
                     {isPending ? (
                       <CircularProgress />
                     ) : (
-                      <div className={classes.fullWidth}>
+                      <Box sx={classes.fullWidth}>
                         <PayPalButtons
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
                         ></PayPalButtons>
-                      </div>
+                      </Box>
                     )}
                   </ListItem>
                 )}

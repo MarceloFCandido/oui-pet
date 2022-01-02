@@ -31,10 +31,11 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { getError } from '../utils/error';
-import useStyles from '../utils/styles';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
+import classes from '../utils/classes';
 
 export default function Layout({ title, description, children }) {
   const router = useRouter();
@@ -43,6 +44,13 @@ export default function Layout({ title, description, children }) {
   const { darkMode, cart, userInfo } = state;
 
   const theme = createTheme({
+    components: {
+      MuiLink: {
+        defaultProps: {
+          underline: 'hover',
+        },
+      },
+    },
     typography: {
       h1: {
         fontSize: '1.6rem',
@@ -66,12 +74,12 @@ export default function Layout({ title, description, children }) {
     },
   });
 
-  const classes = useStyles();
-
   const [sidbarVisible, setSidebarVisible] = useState(false);
+
   const sidebarOpenHandler = () => {
     setSidebarVisible(true);
   };
+
   const sidebarCloseHandler = () => {
     setSidebarVisible(false);
   };
@@ -134,8 +142,10 @@ export default function Layout({ title, description, children }) {
     router.push('/');
   };
 
+  const isDesktop = useMediaQuery('(min-width:600px)');
+
   return (
-    <div>
+    <>
       <Head>
         {description && <meta name="description" content={description}></meta>}
         <link rel="icon" href="images/logo.svg" type="image/svg" />
@@ -143,16 +153,16 @@ export default function Layout({ title, description, children }) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position="static" className={classes.navbar}>
-          <Toolbar className={classes.toolbar}>
+        <AppBar position="static" sx={classes.appbar}>
+          <Toolbar sx={classes.toolbar}>
             <Box display="flex" alignItems="center">
               <IconButton
-                className={classes.menuButton}
+                sx={classes.menuButton}
                 edge="start"
                 aria-label="open drawer"
                 onClick={sidebarOpenHandler}
               >
-                <MenuIcon className={classes.navbarButton} />
+                <MenuIcon sx={classes.navbarButton} />
               </IconButton>
               <NextLink href="/" passHref>
                 <Link>
@@ -204,126 +214,127 @@ export default function Layout({ title, description, children }) {
                 ))}
               </List>
             </Drawer>
-            <div className={classes.searchSection}>
-              <form onSubmit={submitHandler} className={classes.searchForm}>
-                <InputBase
-                  name="query"
-                  className={classes.searchInput}
-                  placeholder="Pesquisar"
-                  onChange={queryChangeHandler}
-                />
-                <IconButton
-                  type="submit"
-                  className={classes.iconButton}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
+            <Box sx={isDesktop ? classes.visible : classes.hidden}>
+              <form onSubmit={submitHandler}>
+                <Box sx={classes.searchForm}>
+                  <InputBase
+                    name="query"
+                    sx={classes.searchInput}
+                    placeholder="Pesquisar"
+                    onChange={queryChangeHandler}
+                  />
+                  <IconButton
+                    type="submit"
+                    sx={classes.iconButton}
+                    aria-label="search"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </Box>
               </form>
-            </div>
-            <div>
-              <List className={classes.navRight}>
-                <ListItem>
-                  <Switch checked={darkMode} onChange={darkModeChangeHandler} />
-                </ListItem>
-                <ListItem>
-                  <div>
-                    <NextLink href="/carrinho" passHref>
-                      <Link>
-                        {cart.cartItems.length > 0 ? (
-                          <Badge
-                            color="secondary"
-                            badgeContent={cart.cartItems.length}
-                          >
-                            <Image
-                              src="/images/carrinho.svg"
-                              alt="imagem de um carrinho de compra"
-                              width={60}
-                              height={47}
-                            />
-                          </Badge>
-                        ) : (
-                          <Image
-                            src="/images/carrinho.svg"
-                            alt="imagem de um carrinho de compra"
-                            width={60}
-                            height={47}
-                          />
-                        )}
-                      </Link>
-                    </NextLink>
-                  </div>
-                </ListItem>
-                <ListItem>
-                  {userInfo ? (
-                    <>
-                      <Button
-                        aria-controls="simple-menu"
-                        aria-haspopup="true"
-                        onClick={loginClickHandler}
-                        className={classes.navbarButton}
+            </Box>
+            <Box sx={classes.navRight}>
+              <Box>
+                <Switch checked={darkMode} onChange={darkModeChangeHandler} />
+              </Box>
+
+              <Box>
+                <NextLink href="/carrinho" passHref>
+                  <Link>
+                    {cart.cartItems.length > 0 ? (
+                      <Badge
+                        color="secondary"
+                        badgeContent={cart.cartItems.length}
                       >
-                        {userInfo.name}
-                      </Button>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={loginMenuCloseHandler}
+                        <Image
+                          src="/images/carrinho.svg"
+                          alt="imagem de um carrinho de compra"
+                          width={60}
+                          height={47}
+                        />
+                      </Badge>
+                    ) : (
+                      <Image
+                        src="/images/carrinho.svg"
+                        alt="imagem de um carrinho de compra"
+                        width={60}
+                        height={47}
+                      />
+                    )}
+                  </Link>
+                </NextLink>
+              </Box>
+              {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    sx={classes.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/perfil')}
+                    >
+                      Perfil
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, '/historico-de-pedidos')
+                      }
+                    >
+                      Histórico de Pedidos
+                    </MenuItem>
+                    {userInfo.isAdmin && (
+                      <MenuItem
+                        onClick={(e) =>
+                          loginMenuCloseHandler(e, '/admin/painel')
+                        }
                       >
-                        <MenuItem
-                          onClick={(e) => loginMenuCloseHandler(e, '/perfil')}
-                        >
-                          Perfil
-                        </MenuItem>
-                        <MenuItem
-                          onClick={(e) =>
-                            loginMenuCloseHandler(e, '/historico-de-pedidos')
-                          }
-                        >
-                          Histórico de Pedidos
-                        </MenuItem>
-                        {userInfo.isAdmin && (
-                          <MenuItem
-                            onClick={(e) =>
-                              loginMenuCloseHandler(e, '/admin/painel')
-                            }
-                          >
-                            Painel do Administrador
-                          </MenuItem>
-                        )}
-                        <MenuItem onClick={logoutClickHandler}>Sair</MenuItem>
-                      </Menu>
-                    </>
-                  ) : (
-                    <NextLink href="/login" passHref>
-                      <Link>
-                        <Typography component="span">Login</Typography>
-                      </Link>
-                    </NextLink>
-                  )}
-                </ListItem>
-              </List>
-            </div>
+                        Painel do Administrador
+                      </MenuItem>
+                    )}
+                    <MenuItem onClick={logoutClickHandler}>Sair</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Button sx={classes.navbarButton}>
+                  <NextLink href="/login" passHref>
+                    <Link>
+                      <Typography component="span">Login</Typography>
+                    </Link>
+                  </NextLink>
+                </Button>
+              )}
+            </Box>
           </Toolbar>
         </AppBar>
-        <Container className={classes.main}>{children}</Container>
-        <footer className={classes.footer}>
-          <div></div>
-          <div>
+        <Container sx={classes.main} component="main">
+          {children}
+        </Container>
+        <Box sx={classes.footer} component="footer">
+          <Box></Box>
+          <Box>
             <h1>Contato</h1>
-          </div>
-          <div>
+          </Box>
+          <Box>
             <Image
               src="/images/logo-rodape.svg"
               alt="imagem da logo do oui pet. Garçon françês segurando um pano na mão."
               width={80}
               height={100.56}
             />
-          </div>
-        </footer>
+          </Box>
+        </Box>
       </ThemeProvider>
-    </div>
+    </>
   );
 }

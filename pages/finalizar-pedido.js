@@ -23,14 +23,12 @@ import {
 import { useSnackbar } from 'notistack';
 import Cookies from 'js-cookie';
 import { getError } from '../utils/error';
-import useStyles from '../utils/styles';
 import Layout from '../components/Layout';
 import CheckoutWizard from '../components/CheckoutWizard';
 import { Store } from '../utils/Store';
+import classes from '../utils/classes';
 
 function PlaceOrder() {
-  const classes = useStyles();
-
   const router = useRouter();
 
   const { state, dispatch } = useContext(Store);
@@ -104,7 +102,7 @@ function PlaceOrder() {
 
       <Grid container spacing={1}>
         <Grid item md={9} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
@@ -118,7 +116,7 @@ function PlaceOrder() {
               </ListItem>
             </List>
           </Card>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
@@ -128,7 +126,7 @@ function PlaceOrder() {
               <ListItem>{paymentMethod}</ListItem>
             </List>
           </Card>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
@@ -185,7 +183,7 @@ function PlaceOrder() {
           </Card>
         </Grid>
         <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
+          <Card sx={classes.section}>
             <List>
               <ListItem>
                 <Typography variant="h2">Resumo do Pedido</Typography>

@@ -15,8 +15,8 @@ import {
 import { getError } from '../utils/error';
 import Cookies from 'js-cookie';
 import Layout from '../components/Layout';
+import Form from '../components/Form';
 import { Store } from '../utils/Store';
-import useStyles from '../utils/styles';
 
 export default function Register() {
   const {
@@ -38,8 +38,6 @@ export default function Register() {
       router.push('/');
     }
   }, []);
-
-  const classes = useStyles();
 
   const submitHandler = async ({ name, email, password, confirmPassword }) => {
     closeSnackbar();
@@ -64,7 +62,7 @@ export default function Register() {
   };
   return (
     <Layout title="Registrar">
-      <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
+      <Form onSubmit={handleSubmit(submitHandler)}>
         <Typography component="h1" variant="h1">
           Registrar
         </Typography>
@@ -197,7 +195,7 @@ export default function Register() {
             </NextLink>
           </ListItem>
         </List>
-      </form>
+      </Form>
     </Layout>
   );
 }

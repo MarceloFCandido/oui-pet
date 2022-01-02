@@ -5,8 +5,8 @@ import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
-import useStyles from '../utils/styles';
 import CheckoutWizard from '../components/CheckoutWizard';
+import Form from '../components/Form';
 
 export default function Shipping() {
   const {
@@ -15,8 +15,6 @@ export default function Shipping() {
     formState: { errors },
     setValue,
   } = useForm();
-
-  const classes = useStyles();
 
   const router = useRouter();
 
@@ -61,7 +59,7 @@ export default function Shipping() {
   return (
     <Layout title="Endereço de Entrega">
       <CheckoutWizard activeStep={1} />
-      <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
+      <Form onSubmit={handleSubmit(submitHandler)}>
         <Typography component="h1" variant="h1">
           Endereço de entrega
         </Typography>
@@ -212,7 +210,7 @@ export default function Shipping() {
             </Button>
           </ListItem>
         </List>
-      </form>
+      </Form>
     </Layout>
   );
 }
