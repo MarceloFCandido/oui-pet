@@ -10,6 +10,7 @@ import {
   Rating,
   Typography,
 } from '@mui/material';
+import classes from "../utils/classes"
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (
@@ -20,6 +21,7 @@ export default function ProductItem({ product, addToCartHandler }) {
             component="img"
             image={product.image}
             title={product.name}
+            sx={classes.cardMediaImage}
           ></CardMedia>
           <CardContent>
             <Typography>{product.name}</Typography>

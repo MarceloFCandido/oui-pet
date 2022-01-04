@@ -93,6 +93,10 @@ const classes = {
     borderRight: '1px #808080 solid',
     paddingRight: '1rem',
   },
+  cardMediaImage: {
+    maxHeight: "15rem",
+    objectFit: "contain",
+  }
 };
 
 export default classes;
