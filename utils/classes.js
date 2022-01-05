@@ -67,23 +67,15 @@ const classes = {
   menuButton: { padding: 0 },
   searchForm: {
     border: '1px solid #ffffff',
-    backgroundColor: '#ffffff',
-    borderRadius: 1,
+    borderRadius: "5px",
+    backgroundColor: '#ffffff55'
   },
   searchInput: {
-    backgroundColor: '#ffffff',
-    paddingLeft: 1,
-    color: '#000000',
-    '& ::placeholder': {
-      color: '#606060',
-    },
+    paddingLeft: "1rem",
   },
   searchButton: {
-    padding: 1,
+    padding: ".5rem",
     borderRadius: '0 5px 5px 0',
-    '& span': {
-      color: '#000000',
-    },
   },
   navRight: {
     display: 'flex',

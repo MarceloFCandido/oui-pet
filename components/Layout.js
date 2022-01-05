@@ -27,6 +27,7 @@ import {
   Toolbar,
   ThemeProvider,
   Typography,
+  FormControl,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -66,10 +67,10 @@ export default function Layout({ title, description, children }) {
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#EFC600',
+        main: '#ffffff',
       },
       secondary: {
-        main: '#208080',
+        main: '#000000',
       },
     },
   });
@@ -215,23 +216,25 @@ export default function Layout({ title, description, children }) {
               </List>
             </Drawer>
             <Box sx={isDesktop ? classes.visible : classes.hidden}>
-              <form onSubmit={submitHandler}>
+              <FormControl color='primary' onSubmit={submitHandler}>
                 <Box sx={classes.searchForm}>
                   <InputBase
                     name="query"
                     sx={classes.searchInput}
                     placeholder="Pesquisar"
+                    color='primary'
                     onChange={queryChangeHandler}
                   />
                   <IconButton
                     type="submit"
-                    sx={classes.iconButton}
+                    sx={classes.searchButton}
+                    color='primary'
                     aria-label="search"
                   >
                     <SearchIcon />
                   </IconButton>
                 </Box>
-              </form>
+              </FormControl>
             </Box>
             <Box sx={classes.navRight}>
               <Box>
