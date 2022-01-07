@@ -75,6 +75,7 @@ const classes = {
     paddingLeft: '1rem',
   },
   searchButton: {
+    color: 'white',
     padding: '.5rem',
     borderRadius: '0 5px 5px 0',
   },

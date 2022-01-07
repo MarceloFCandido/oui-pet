@@ -67,10 +67,10 @@ export default function Layout({ title, description, children }) {
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#ffffff',
+        main: '#EFC600',
       },
       secondary: {
-        main: '#000000',
+        main: '#208080',
       },
     },
   });
@@ -216,19 +216,18 @@ export default function Layout({ title, description, children }) {
               </List>
             </Drawer>
             <Box sx={isDesktop ? classes.visible : classes.hidden}>
-              <FormControl color='primary' onSubmit={submitHandler}>
+              <FormControl color="primary" onSubmit={submitHandler}>
                 <Box sx={classes.searchForm}>
                   <InputBase
                     name="query"
                     sx={classes.searchInput}
                     placeholder="Pesquisar"
-                    color='primary'
+                    color="primary"
                     onChange={queryChangeHandler}
                   />
                   <IconButton
                     type="submit"
                     sx={classes.searchButton}
-                    color='primary'
                     aria-label="search"
                   >
                     <SearchIcon />

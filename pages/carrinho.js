@@ -130,7 +130,7 @@ function CartScreen() {
                 <ListItem>
                   <Typography variant="h2">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    itens) : R$
+                    itens) : R${' '}
                     {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
