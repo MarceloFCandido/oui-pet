@@ -137,7 +137,7 @@ function AdminOrders() {
                                 : 'USUÁRIO DELETADO'}
                             </TableCell>
                             <TableCell>{order.createdAt}</TableCell>
-                            <TableCell>${order.totalPrice}</TableCell>
+                            <TableCell>R$ {order.totalPrice}</TableCell>
                             <TableCell>
                               {order.isPaid
                                 ? `pago em ${order.paidAt}`

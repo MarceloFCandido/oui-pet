@@ -334,7 +334,7 @@ function Order({ params }) {
                       <Typography>Frete:</Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography align="right">${taxPrice}</Typography>
+                      <Typography align="right">R$ {taxPrice}</Typography>
                     </Grid>
                   </Grid>
                 </ListItem>

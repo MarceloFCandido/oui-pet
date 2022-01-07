@@ -121,7 +121,7 @@ function OrderHistory() {
                           <TableRow key={order._id}>
                             <TableCell>{order._id.substring(20, 24)}</TableCell>
                             <TableCell>{order.createdAt}</TableCell>
-                            <TableCell>${order.totalPrice}</TableCell>
+                            <TableCell>R$ {order.totalPrice}</TableCell>
                             <TableCell>
                               {order.isPaid
                                 ? `pago em ${order.paidAt}`
