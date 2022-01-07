@@ -138,7 +138,7 @@ function Order({ params }) {
           type: 'resetOptions',
           value: {
             'client-id': clientId,
-            currency: 'USD',
+            currency: 'BRL',
           },
         });
 
