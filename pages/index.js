@@ -10,6 +10,7 @@ import Product from '../models/Product';
 import ProductItem from '../components/ProductItem';
 import db from '../utils/db';
 import classes from '../utils/classes';
+import Image from 'next/image';
 
 export default function Home(props) {
   const router = useRouter();
@@ -41,17 +42,18 @@ export default function Home(props) {
             href={`/produto/${product.slug}`}
             passHref
           >
-            <Link sx={classes.flex}>
-              <img
+            <Link sx={[classes.flex, classes.center]}>
+              <Image
                 src={product.featuredImage}
                 alt={product.name}
-                className={classes.featuredImage}
+                width={1200}
+                height={300}
               />
             </Link>
           </NextLink>
         ))}
       </Carousel>
-      <Typography variant="h2">Popular Products</Typography>
+      <Typography variant="h2">Produtos Populares</Typography>
       <Grid container spacing={3}>
         {topRatedProducts.map((product) => (
           <Grid item md={4} key={product.name}>

@@ -2,6 +2,7 @@ const classes = {
   flex: {
     display: 'flex',
     '& img': {
+      display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -67,14 +68,14 @@ const classes = {
   menuButton: { padding: 0 },
   searchForm: {
     border: '1px solid #ffffff',
-    borderRadius: "5px",
-    backgroundColor: '#ffffff55'
+    borderRadius: '5px',
+    backgroundColor: '#ffffff55',
   },
   searchInput: {
-    paddingLeft: "1rem",
+    paddingLeft: '1rem',
   },
   searchButton: {
-    padding: ".5rem",
+    padding: '.5rem',
     borderRadius: '0 5px 5px 0',
   },
   navRight: {
@@ -86,9 +87,12 @@ const classes = {
     paddingRight: '1rem',
   },
   cardMediaImage: {
-    maxHeight: "15rem",
-    objectFit: "contain",
-  }
+    maxHeight: '15rem',
+    objectFit: 'contain',
+  },
+  center: {
+    justifyContent: 'center',
+  },
 };
 
 export default classes;
