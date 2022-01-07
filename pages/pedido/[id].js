@@ -278,7 +278,7 @@ function Order({ params }) {
                         {orderItems.map((item) => (
                           <TableRow key={item._id}>
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
+                              <NextLink href={`/produto/${item.slug}`} passHref>
                                 <Link>
                                   <Image
                                     src={item.image}
@@ -291,7 +291,7 @@ function Order({ params }) {
                             </TableCell>
 
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
+                              <NextLink href={`/produto/${item.slug}`} passHref>
                                 <Link>
                                   <Typography>{item.name}</Typography>
                                 </Link>
