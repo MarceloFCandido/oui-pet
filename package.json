@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.0",
     "cloudinary": "^1.27.1",
+    "country-list-js": "^3.1.7",
     "i": "^0.3.7",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
