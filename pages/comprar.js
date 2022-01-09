@@ -94,7 +94,7 @@ export default function Shipping() {
           </ListItem>
           <ListItem>
             <Controller
-              name="address"
+              name="country"
               control={control}
               defaultValue=""
               rules={{
@@ -105,42 +105,14 @@ export default function Shipping() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  id="address"
-                  label="Endereço"
-                  error={Boolean(errors.address)}
+                  id="country"
+                  label="País"
+                  error={Boolean(errors.country)}
                   helperText={
-                    errors.address
-                      ? errors.address.type === 'minLength'
-                        ? 'Endereço maior que 1'
-                        : 'Endereço é obrigatório'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
-          </ListItem>
-          <ListItem>
-            <Controller
-              name="city"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="city"
-                  label="Cidade"
-                  error={Boolean(errors.city)}
-                  helperText={
-                    errors.city
-                      ? errors.city.type === 'minLength'
-                        ? 'Cidade é maior que 1'
-                        : 'Cidade é obrigatória'
+                    errors.country
+                      ? errors.country.type === 'minLength'
+                        ? 'País maior que 1'
+                        : 'País é obrigatório'
                       : ''
                   }
                   {...field}
@@ -178,7 +150,7 @@ export default function Shipping() {
           </ListItem>
           <ListItem>
             <Controller
-              name="country"
+              name="city"
               control={control}
               defaultValue=""
               rules={{
@@ -189,14 +161,42 @@ export default function Shipping() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  id="country"
-                  label="País"
-                  error={Boolean(errors.country)}
+                  id="city"
+                  label="Cidade"
+                  error={Boolean(errors.city)}
                   helperText={
-                    errors.country
-                      ? errors.country.type === 'minLength'
-                        ? 'País maior que 1'
-                        : 'País é obrigatório'
+                    errors.city
+                      ? errors.city.type === 'minLength'
+                        ? 'Cidade é maior que 1'
+                        : 'Cidade é obrigatória'
+                      : ''
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="address"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="address"
+                  label="Endereço"
+                  error={Boolean(errors.address)}
+                  helperText={
+                    errors.address
+                      ? errors.address.type === 'minLength'
+                        ? 'Endereço maior que 1'
+                        : 'Endereço é obrigatório'
                       : ''
                   }
                   {...field}
