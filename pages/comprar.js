@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Button, List, ListItem, TextField, Typography } from '@mui/material';
+import { Button, List, ListItem, TextField, Typography, Select, MenuItem } from '@mui/material';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Form from '../components/Form';
+import country from 'country-list-js';
 
 export default function Shipping() {
   const {
@@ -92,6 +93,7 @@ export default function Shipping() {
               )}
             ></Controller>
           </ListItem>
+          {/* FIXME Esse label não funciona bem com o componente 'Select' */}
           <ListItem>
             <Controller
               name="country"
@@ -102,7 +104,7 @@ export default function Shipping() {
                 minLength: 2,
               }}
               render={({ field }) => (
-                <TextField
+                <Select
                   variant="outlined"
                   fullWidth
                   id="country"
@@ -116,7 +118,16 @@ export default function Shipping() {
                       : ''
                   }
                   {...field}
-                ></TextField>
+                >
+                  {country.names().sort().map((country, idx) => (
+                    <MenuItem
+                      key={`${country}_${idx}`}
+                      value={country}
+                    >
+                      {country}
+                    </MenuItem>
+                  ))}
+                </Select>
               )}
             ></Controller>
           </ListItem>
