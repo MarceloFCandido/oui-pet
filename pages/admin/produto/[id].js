@@ -63,18 +63,15 @@ function ProductEdit({ params }) {
       loading: true,
       error: '',
     });
-
   const {
     handleSubmit,
     control,
     formState: { errors },
     setValue,
   } = useForm();
-
+  const [isFeatured, setIsFeatured] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const router = useRouter();
-
   const { userInfo } = state;
 
   useEffect(() => {
@@ -85,27 +82,33 @@ function ProductEdit({ params }) {
         try {
           dispatch({ type: 'FETCH_REQUEST' });
 
-          const { data } = await axios.get(`/api/admin/products/${productId}`, {
-            headers: { authorization: `Bearer ${userInfo.token}` },
-          });
+          let data;
+          if (productId !== `novo-produto`) {
+            data = (await axios.get(`/api/admin/products/${productId}`, {
+              headers: { authorization: `Bearer ${userInfo.token}` },
+            })).data;
+          }
 
           dispatch({ type: 'FETCH_SUCCESS' });
-          setValue('name', data.name);
-          setValue('slug', data.slug);
-          setValue('price', data.price);
-          setValue('image', data.image);
-          setValue('featuredImage', data.featuredImage);
-          setIsFeatured(data.isFeatured);
-          setValue('category', data.category);
-          setValue('brand', data.brand);
-          setValue('countInStock', data.countInStock);
-          setValue('description', data.description);
+
+          setValue('name', data?.name || '');
+          setValue('slug', data?.slug || '');
+          setValue('price', data?.price || '');
+          setValue('image', data?.image || '');
+          setValue('featuredImage', data?.featuredImage || '');
+          setIsFeatured(data?.isFeatured || '');
+          setValue('category', data?.category || '');
+          setValue('brand', data?.brand || '');
+          setValue('countInStock', data?.countInStock || '');
+          setValue('description', data?.description || '');
         } catch (err) {
           dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
         }
       };
+
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadHandler = async (e, imageField = 'image') => {
@@ -135,44 +138,37 @@ function ProductEdit({ params }) {
     }
   };
 
-  const submitHandler = async ({
-    name,
-    slug,
-    price,
-    category,
-    image,
-    featuredImage,
-    brand,
-    countInStock,
-    description,
-  }) => {
+  const submit = async (data) => {
     closeSnackbar();
 
     try {
-      dispatch({ type: 'UPDATE_REQUEST' });
+      if (productId === 'novo-produto') {
+        dispatch({ type: 'CREATE_REQUEST' });
 
-      await axios.put(
-        `/api/admin/products/${productId}`,
-        {
-          name,
-          slug,
-          price,
-          category,
-          image,
-          isFeatured,
-          featuredImage,
-          brand,
-          countInStock,
-          description,
-        },
-        { headers: { authorization: `Bearer ${userInfo.token}` } }
-      );
+        await axios.post(
+          `/api/admin/products`,
+          { ...data, isFeatured: isFeatured },
+          { headers: { authorization: `Bearer ${userInfo.token}` } }
+        );
 
-      dispatch({ type: 'UPDATE_SUCCESS' });
+        dispatch({ type: 'CREATE_SUCCESS' });
 
-      enqueueSnackbar('Produto atualizado com sucesso!', {
-        variant: 'success',
-      });
+        enqueueSnackbar('Produto criado com sucesso', { variant: 'success' });
+      } else {
+        dispatch({ type: 'UPDATE_REQUEST' });
+
+        await axios.put(
+          `/api/admin/products/${productId}`,
+          { ...data, isFeatured: isFeatured },
+          { headers: { authorization: `Bearer ${userInfo.token}` } }
+        );
+
+        dispatch({ type: 'UPDATE_SUCCESS' });
+
+        enqueueSnackbar('Produto atualizado com sucesso!', {
+          variant: 'success',
+        });
+      }
 
       router.push('/admin/produtos');
     } catch (err) {
@@ -181,10 +177,8 @@ function ProductEdit({ params }) {
     }
   };
 
-  const [isFeatured, setIsFeatured] = useState(false);
-
   return (
-    <Layout title={`Editar produto ${productId}`}>
+    <Layout title={productId === 'novo-produto' ? `Novo produto` : `Editar produto ${productId}`}>
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
           <Card sx={classes.section}>
@@ -194,16 +188,19 @@ function ProductEdit({ params }) {
                   <ListItemText primary="Painel do Administrador"></ListItemText>
                 </ListItem>
               </NextLink>
+
               <NextLink href="/admin/pedidos" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Pedidos"></ListItemText>
                 </ListItem>
               </NextLink>
+
               <NextLink href="/admin/produtos" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="Produtos"></ListItemText>
                 </ListItem>
               </NextLink>
+
               <NextLink href="/admin/usuarios" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Usuários"></ListItemText>
@@ -217,15 +214,17 @@ function ProductEdit({ params }) {
             <List>
               <ListItem>
                 <Typography component="h1" variant="h1">
-                  Editar Produto {productId}
+                  {productId === 'novo-produto' ? `Novo produto` : `Editar produto ${productId}`}
                 </Typography>
               </ListItem>
+
               <ListItem>
                 {loading && <CircularProgress></CircularProgress>}
                 {error && <Typography sx={classes.error}>{error}</Typography>}
               </ListItem>
+
               <ListItem>
-                <Form onSubmit={handleSubmit(submitHandler)}>
+                <Form onSubmit={handleSubmit(submit)}>
                   <List>
                     <ListItem>
                       <Controller
@@ -248,6 +247,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="slug"
@@ -269,6 +269,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="price"
@@ -292,6 +293,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="image"
@@ -315,6 +317,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Button variant="contained" component="label">
                         Anexar Arquivo
@@ -322,18 +325,20 @@ function ProductEdit({ params }) {
                       </Button>
                       {loadingUpload && <CircularProgress />}
                     </ListItem>
+
                     <ListItem>
                       <FormControlLabel
-                        label="É destaque?"
-                        control={
+                        label='É destaque?'
+                        control={(
                           <Checkbox
-                            onClick={(e) => setIsFeatured(e.target.checked)}
+                            name='isFeatured'
                             checked={isFeatured}
-                            name="isFeatured"
+                            onClick={(e) => setIsFeatured(e.target.checked)}
                           />
-                        }
-                      ></FormControlLabel>
+                        )}
+                      />
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="featuredImage"
@@ -344,9 +349,8 @@ function ProductEdit({ params }) {
                         }}
                         render={({ field }) => (
                           <TextField
-                            variant="outlined"
-                            fullWidth
                             id="featuredImage"
+                            fullWidth
                             label="Imagem de destaque"
                             error={Boolean(errors.featuredImage)}
                             helperText={
@@ -354,11 +358,13 @@ function ProductEdit({ params }) {
                                 ? 'Imagem de destaque é obrigatória'
                                 : ''
                             }
+                            variant="outlined"
                             {...field}
                           ></TextField>
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Button variant="contained" component="label">
                         Anexar Arquivo
@@ -370,6 +376,7 @@ function ProductEdit({ params }) {
                       </Button>
                       {loadingUpload && <CircularProgress />}
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="category"
@@ -393,6 +400,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="brand"
@@ -416,6 +424,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="countInStock"
@@ -441,6 +450,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
+
                     <ListItem>
                       <Controller
                         name="description"
@@ -475,7 +485,7 @@ function ProductEdit({ params }) {
                         fullWidth
                         color="primary"
                       >
-                        Atualizar
+                        {productId === 'novo-produto' ? `Criar` : `Atualizar`}
                       </Button>
                       {loadingUpdate && <CircularProgress />}
                     </ListItem>

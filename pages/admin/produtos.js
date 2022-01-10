@@ -102,19 +102,7 @@ function AdminProducts() {
     }
 
     try {
-      dispatch({ type: 'CREATE_REQUEST' });
-      const { data } = await axios.post(
-        `/api/admin/products`,
-        {},
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      dispatch({ type: 'CREATE_SUCCESS' });
-
-      enqueueSnackbar('Produto criado com sucesso', { variant: 'success' });
-
-      router.push(`/admin/produto/${data.product._id}`);
+      router.push(`/admin/produto/novo-produto`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
 
