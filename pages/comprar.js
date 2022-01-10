@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Button, List, ListItem, TextField, Typography } from '@mui/material';
+import { Button, List, ListItem, TextField, Typography, Select, MenuItem } from '@mui/material';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Form from '../components/Form';
+import country from 'country-list-js';
 
 export default function Shipping() {
   const {
@@ -92,9 +93,47 @@ export default function Shipping() {
               )}
             ></Controller>
           </ListItem>
+          {/* FIXME Esse label não funciona bem com o componente 'Select' */}
           <ListItem>
             <Controller
-              name="address"
+              name="country"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <Select
+                  variant="outlined"
+                  fullWidth
+                  id="country"
+                  label="País"
+                  error={Boolean(errors.country)}
+                  helperText={
+                    errors.country
+                      ? errors.country.type === 'minLength'
+                        ? 'País maior que 1'
+                        : 'País é obrigatório'
+                      : ''
+                  }
+                  {...field}
+                >
+                  {country.names().sort().map((country, idx) => (
+                    <MenuItem
+                      key={`${country}_${idx}`}
+                      value={country}
+                    >
+                      {country}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="postalCode"
               control={control}
               defaultValue=""
               rules={{
@@ -105,14 +144,14 @@ export default function Shipping() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  id="address"
-                  label="Endereço"
-                  error={Boolean(errors.address)}
+                  id="postalCode"
+                  label="CEP"
+                  error={Boolean(errors.postalCode)}
                   helperText={
-                    errors.address
-                      ? errors.address.type === 'minLength'
-                        ? 'Endereço maior que 1'
-                        : 'Endereço é obrigatório'
+                    errors.postalCode
+                      ? errors.postalCode.type === 'minLength'
+                        ? 'CEP maior que 1'
+                        : 'CEP é obrigatório'
                       : ''
                   }
                   {...field}
@@ -150,7 +189,7 @@ export default function Shipping() {
           </ListItem>
           <ListItem>
             <Controller
-              name="postalCode"
+              name="address"
               control={control}
               defaultValue=""
               rules={{
@@ -161,42 +200,14 @@ export default function Shipping() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  id="postalCode"
-                  label="CEP"
-                  error={Boolean(errors.postalCode)}
+                  id="address"
+                  label="Endereço"
+                  error={Boolean(errors.address)}
                   helperText={
-                    errors.postalCode
-                      ? errors.postalCode.type === 'minLength'
-                        ? 'CEP maior que 1'
-                        : 'CEP é obrigatório'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
-          </ListItem>
-          <ListItem>
-            <Controller
-              name="country"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="country"
-                  label="País"
-                  error={Boolean(errors.country)}
-                  helperText={
-                    errors.country
-                      ? errors.country.type === 'minLength'
-                        ? 'País maior que 1'
-                        : 'País é obrigatório'
+                    errors.address
+                      ? errors.address.type === 'minLength'
+                        ? 'Endereço maior que 1'
+                        : 'Endereço é obrigatório'
                       : ''
                   }
                   {...field}
