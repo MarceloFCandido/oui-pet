@@ -9,8 +9,11 @@ handler.use(isAuth, isAdmin);
 
 handler.get(async (req, res) => {
   await db.connect();
+
   const product = await Product.findById(req.query.id);
+
   await db.disconnect();
+
   res.send(product);
 });
 
@@ -18,6 +21,7 @@ handler.put(async (req, res) => {
   await db.connect();
 
   const product = await Product.findById(req.query.id);
+  console.log(req.body)
 
   if (product) {
     product.name = req.body.name;
@@ -30,6 +34,7 @@ handler.put(async (req, res) => {
     product.brand = req.body.brand;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
+
     await product.save();
     await db.disconnect();
 
