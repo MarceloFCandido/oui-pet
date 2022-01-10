@@ -340,18 +340,18 @@ function ProductEdit({ params }) {
                         control={control}
                         defaultValue=""
                         rules={{
-                          required: true,
+                          required: isFeatured,
                         }}
                         render={({ field }) => (
                           <TextField
                             variant="outlined"
                             fullWidth
                             id="featuredImage"
-                            label="Imagem em destaque"
-                            error={Boolean(errors.image)}
+                            label="Imagem de destaque"
+                            error={Boolean(errors.featuredImage)}
                             helperText={
-                              errors.image
-                                ? 'Imagem em destaque é obrigatória'
+                              errors.featuredImage
+                                ? 'Imagem de destaque é obrigatória'
                                 : ''
                             }
                             {...field}
