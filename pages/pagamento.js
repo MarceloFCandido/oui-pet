@@ -72,8 +72,8 @@ export default function Payment() {
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
-                  label="Bitcoin"
-                  value="Bitcoin"
+                  label="CryptoMoeda"
+                  value="CryptoMoeda"
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
