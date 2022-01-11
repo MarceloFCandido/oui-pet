@@ -213,6 +213,16 @@ function Order({ params }) {
     }
   }
 
+  function payWithEther() {
+    // Endereço da carteira do Iagor
+    const to = "0xB88008609C6b9F4167F581d504AFA21197a1D2D0";
+
+    // FIXME fazer ajustes necessários da cotação do real quando for realizar o pagamento
+    const valueEther = 0.1;
+
+    window.open(`https://pay.buildship.dev/to/${to}?value=${valueEther}`,'payment','width=500, height=800');
+  }
+
   return (
     <Layout title={`Pedido ${orderId}`}>
       <Typography component="h1" variant="h1">
@@ -367,21 +377,41 @@ function Order({ params }) {
                   por nenhuma transação feita.
                 </Typography>
                 {!isPaid && (
-                  paymentMethod === "PayPal" && (
-                    <ListItem>
-                      {isPending ? (
-                        <CircularProgress />
-                      ) : (
-                        <Box sx={classes.fullWidth}>
-                          <PayPalButtons
-                            createOrder={createOrder}
-                            onApprove={onApprove}
-                            onError={onError}
+                  <ListItem>
+                    {
+                      paymentMethod === "PayPal" && (
+                          isPending ? (
+                            <CircularProgress />
+                          ) : (
+                            <Box sx={classes.fullWidth}>
+                              <PayPalButtons
+                                createOrder={createOrder}
+                                onApprove={onApprove}
+                                onError={onError}
+                              />
+                            </Box>
+                          )
+                      )
+                    }
+                    {
+                      paymentMethod === "CryptoMoeda" && (
+                        <Button
+                          onClick={payWithEther}
+                          variant="contained"
+                          sx={{
+                            width: "100%"
+                          }}
+                        >
+                          <Image
+                            src="/images/ethereum.svg"
+                            alt="Pagar com Etherum"
+                            width={50}
+                            height={50}
                           />
-                        </Box>
-                      )}
-                    </ListItem>
-                  )
+                        </Button>
+                      )
+                    }
+                  </ListItem>
                 )}
                 {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                   <ListItem>
