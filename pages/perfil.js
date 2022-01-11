@@ -1,7 +1,6 @@
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import NexLink from 'next/link';
 import React, { useEffect, useContext } from 'react';
 import {
   Button,
@@ -9,7 +8,6 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText,
   TextField,
   Typography,
 } from '@mui/material';
@@ -18,8 +16,10 @@ import { useSnackbar } from 'notistack';
 import Cookies from 'js-cookie';
 import { getError } from '../utils/error';
 import { Store } from '../utils/Store';
+
 import Layout from '../components/Layout';
 import Form from '../components/Form';
+import UserPanel from '../components/UserPanel';
 import classes from '../utils/classes';
 
 function Profile() {
@@ -76,22 +76,8 @@ function Profile() {
   return (
     <Layout title="Perfil">
       <Grid container spacing={1}>
-        <Grid item md={3} xs={12}>
-          <Card sx={classes.section}>
-            <List>
-              <NexLink href="/perfil" passHref>
-                <ListItem selected button component="a">
-                  <ListItemText primary="Perfil do Usuário"></ListItemText>
-                </ListItem>
-              </NexLink>
-              <NexLink href="/historico-de-pedidos" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Histórico de Pedidos"></ListItemText>
-                </ListItem>
-              </NexLink>
-            </List>
-          </Card>
-        </Grid>
+        <UserPanel current='perfil' />
+
         <Grid item md={9} xs={12}>
           <Card sx={classes.section}>
             <List>

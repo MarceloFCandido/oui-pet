@@ -10,7 +10,6 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText,
   Table,
   TableBody,
   TableCell,
@@ -21,7 +20,9 @@ import {
 } from '@mui/material';
 import { getError } from '../utils/error';
 import { Store } from '../utils/Store';
+
 import Layout from '../components/Layout';
+import UserPanel from '../components/UserPanel';
 import classes from '../utils/classes';
 
 function reducer(state, action) {
@@ -74,22 +75,8 @@ function OrderHistory() {
   return (
     <Layout title="Histórico de Pedidos">
       <Grid container spacing={1}>
-        <Grid item md={3} xs={12}>
-          <Card sx={classes.section}>
-            <List>
-              <NexLink href="/perfil" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Perfil do Usuário"></ListItemText>
-                </ListItem>
-              </NexLink>
-              <NexLink href="/historico-de-pedidos" passHref>
-                <ListItem selected button component="a">
-                  <ListItemText primary="Histórico de Pedidos"></ListItemText>
-                </ListItem>
-              </NexLink>
-            </List>
-          </Card>
-        </Grid>
+        <UserPanel current='historico-de-pedidos' />
+
         <Grid item md={9} xs={12}>
           <Card sx={classes.section}>
             <List>
