@@ -367,19 +367,21 @@ function Order({ params }) {
                   por nenhuma transação feita.
                 </Typography>
                 {!isPaid && (
-                  <ListItem>
-                    {isPending ? (
-                      <CircularProgress />
-                    ) : (
-                      <Box sx={classes.fullWidth}>
-                        <PayPalButtons
-                          createOrder={createOrder}
-                          onApprove={onApprove}
-                          onError={onError}
-                        />
-                      </Box>
-                    )}
-                  </ListItem>
+                  paymentMethod === "PayPal" && (
+                    <ListItem>
+                      {isPending ? (
+                        <CircularProgress />
+                      ) : (
+                        <Box sx={classes.fullWidth}>
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                          />
+                        </Box>
+                      )}
+                    </ListItem>
+                  )
                 )}
                 {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                   <ListItem>
