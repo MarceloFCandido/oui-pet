@@ -352,6 +352,20 @@ function Order({ params }) {
                     </Grid>
                   </Grid>
                 </ListItem>
+                <Typography
+                  variant="h1"
+                  component="h3"
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    textAlign: "center",
+                    fontWeight: "bold"
+                  }}
+                >
+                  Atenção, não realize pagamentos por essa plataforma foram
+                  implementados somente para fins educativos, não nos responsabilizamos
+                  por nenhuma transação feita.
+                </Typography>
                 {!isPaid && (
                   <ListItem>
                     {isPending ? (
@@ -362,7 +376,7 @@ function Order({ params }) {
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
-                        ></PayPalButtons>
+                        />
                       </Box>
                     )}
                   </ListItem>
