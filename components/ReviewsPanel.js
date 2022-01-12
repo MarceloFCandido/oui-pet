@@ -16,7 +16,7 @@ function ReviewsPanel({ reviews }) {
     comment
   }) => (
     <ListItem key={_id}>
-      <Grid container>
+      <Grid container direction="row" justifyContent="space-between" alignItems="center">
         <Grid item sx={classes.reviewItem}>
           <Typography><strong>{name}</strong></Typography>
 
@@ -26,7 +26,7 @@ function ReviewsPanel({ reviews }) {
         <Grid item>
           <Rating value={rating} readOnly />
 
-          <Typography>{comment}</Typography>
+          <Typography sx={{ textAlign: 'right' }}>{comment}</Typography>
         </Grid>
       </Grid>
     </ListItem>
