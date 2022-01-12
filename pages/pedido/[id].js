@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import Image from 'next/image';
@@ -21,6 +21,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { Refresh } from '@mui/icons-material';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
@@ -95,6 +96,9 @@ function Order({ params }) {
     isDelivered,
     deliveredAt,
   } = order;
+
+  const [etherValue, setEtherValue] = useState('');
+  const [etherValueUpdated, setEtherValueUpdated] = useState(false);
 
   useEffect(() => {
     if (!userInfo) {
@@ -213,14 +217,26 @@ function Order({ params }) {
     }
   }
 
+  async function refreshEtherValue() {
+    setEtherValueUpdated(true);
+
+    const { data: { ethereum: { brl: brlEtherValue } } } = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=brl');
+
+    const convertBrlToEtherValue = itemsPrice / brlEtherValue;
+
+    setEtherValue(convertBrlToEtherValue);
+
+    setTimeout(() => {
+      setEtherValueUpdated(false);
+      setEtherValue('');
+    }, 5000);
+  }
+
   function payWithEther() {
     // Endereço da carteira do Iagor
     const to = "0xB88008609C6b9F4167F581d504AFA21197a1D2D0";
 
-    // FIXME fazer ajustes necessários da cotação do real quando for realizar o pagamento
-    const valueEther = 0.1;
-
-    window.open(`https://pay.buildship.dev/to/${to}?value=${valueEther}`,'payment','width=500, height=800');
+    window.open(`https://pay.buildship.dev/to/${to}?value=${etherValue}`,'payment','width=500, height=800');
   }
 
   return (
@@ -377,7 +393,13 @@ function Order({ params }) {
                   por nenhuma transação feita.
                 </Typography>
                 {!isPaid && (
-                  <ListItem>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between"
+                    }}
+                  >
                     {
                       paymentMethod === "PayPal" && (
                           isPending ? (
@@ -395,20 +417,49 @@ function Order({ params }) {
                     }
                     {
                       paymentMethod === "CryptoMoeda" && (
-                        <Button
-                          onClick={payWithEther}
-                          variant="contained"
-                          sx={{
-                            width: "100%"
-                          }}
-                        >
-                          <Image
-                            src="/images/ethereum.svg"
-                            alt="Pagar com Etherum"
-                            width={50}
-                            height={50}
-                          />
-                        </Button>
+                        <>
+                          <Button
+                            onClick={refreshEtherValue}
+                            variant="contained"
+                            sx={{
+                              width: "20%"
+                            }}
+                            disabled={etherValueUpdated}
+                          >
+                            <Refresh sx={{
+                              width: 30,
+                              height: 50
+                            }} />
+                          </Button>
+                          <Button
+                            onClick={payWithEther}
+                            variant="contained"
+                            sx={{
+                              width: "100%",
+                              ml: 1,
+                              boxSizing: "content-box",
+                              height: "50px"
+                            }}
+                            disabled={!etherValueUpdated}
+                          >
+                            <Image
+                              src="/images/ethereum.svg"
+                              alt="Pagar com Etherum"
+                              width={30}
+                              height={30}
+                            />
+                            <Typography
+                              component='span'
+                              variant='p'
+                              sx={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                              }}
+                            >
+                              {etherValue}
+                            </Typography>
+                          </Button>
+                        </>
                       )
                     }
                   </ListItem>
