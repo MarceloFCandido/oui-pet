@@ -84,9 +84,9 @@ const classes = {
   },
   reviewItem: {
     marginRight: '1rem',
-    borderRight: '1px #808080 solid',
     paddingRight: '1rem',
   },
+  rating: { display: 'flex', justifyContent: 'right' },
   cardMediaImage: {
     maxHeight: '15rem',
     objectFit: 'contain',

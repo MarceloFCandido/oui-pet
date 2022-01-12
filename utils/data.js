@@ -43,8 +43,8 @@ const data = {
       description: 'Casinha para cães. Muito grande',
     },
     {
-      name: 'Casinha de hamister',
-      slug: 'casinha-hamister',
+      name: 'Casinha de hamster',
+      slug: 'casinha-hamster',
       category: 'Casa',
       image: '/images/casinha-hamister.jpg',
       isFeatured: true,
@@ -54,7 +54,7 @@ const data = {
       rating: 4.5,
       numReviews: 10,
       countInStock: 10,
-      description: 'Casinha para hamister. Com brinquedo',
+      description: 'Casinha para hamster. Com brinquedo',
     },
     {
       name: 'Arranhador felino',
