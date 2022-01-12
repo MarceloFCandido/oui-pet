@@ -152,8 +152,10 @@ export default function Layout({ title, description, children }) {
         <link rel="icon" href="images/logo.svg" type="image/svg" />
         <title>{title ? `${title} - Oui Pet` : 'Oui Pet'}</title>
       </Head>
+
       <ThemeProvider theme={theme}>
         <CssBaseline />
+
         <AppBar position="static" sx={classes.appbar}>
           <Toolbar sx={classes.toolbar}>
             <Box display="flex" alignItems="center">
@@ -165,6 +167,7 @@ export default function Layout({ title, description, children }) {
               >
                 <MenuIcon sx={classes.navbarButton} />
               </IconButton>
+
               <NextLink href="/" passHref>
                 <Link>
                   <Image
@@ -176,6 +179,7 @@ export default function Layout({ title, description, children }) {
                 </Link>
               </NextLink>
             </Box>
+
             <Drawer
               anchor="left"
               open={sidbarVisible}
@@ -189,6 +193,7 @@ export default function Layout({ title, description, children }) {
                     justifyContent="space-between"
                   >
                     <Typography>Categorias</Typography>
+
                     <IconButton
                       aria-label="close"
                       onClick={sidebarCloseHandler}
@@ -197,7 +202,9 @@ export default function Layout({ title, description, children }) {
                     </IconButton>
                   </Box>
                 </ListItem>
+
                 <Divider light />
+
                 {categories.map((category) => (
                   <NextLink
                     key={category}
@@ -215,6 +222,7 @@ export default function Layout({ title, description, children }) {
                 ))}
               </List>
             </Drawer>
+
             <Box sx={isDesktop ? classes.visible : classes.hidden}>
               <FormControl color="primary" onSubmit={submitHandler}>
                 <Box sx={classes.searchForm}>
@@ -225,6 +233,7 @@ export default function Layout({ title, description, children }) {
                     color="primary"
                     onChange={queryChangeHandler}
                   />
+
                   <IconButton
                     type="submit"
                     sx={classes.searchButton}
@@ -235,6 +244,7 @@ export default function Layout({ title, description, children }) {
                 </Box>
               </FormControl>
             </Box>
+
             <Box sx={classes.navRight}>
               <Box>
                 <Switch checked={darkMode} onChange={darkModeChangeHandler} />
@@ -266,6 +276,7 @@ export default function Layout({ title, description, children }) {
                   </Link>
                 </NextLink>
               </Box>
+
               {userInfo ? (
                 <>
                   <Button
@@ -276,6 +287,7 @@ export default function Layout({ title, description, children }) {
                   >
                     {userInfo.name}
                   </Button>
+
                   <Menu
                     id="simple-menu"
                     anchorEl={anchorEl}
@@ -288,6 +300,7 @@ export default function Layout({ title, description, children }) {
                     >
                       Perfil
                     </MenuItem>
+
                     <MenuItem
                       onClick={(e) =>
                         loginMenuCloseHandler(e, '/historico-de-pedidos')
@@ -295,6 +308,15 @@ export default function Layout({ title, description, children }) {
                     >
                       Histórico de Pedidos
                     </MenuItem>
+
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, '/avaliacoes')
+                      }
+                    >
+                      Avaliações
+                    </MenuItem>
+
                     {userInfo.isAdmin && (
                       <MenuItem
                         onClick={(e) =>
@@ -319,14 +341,18 @@ export default function Layout({ title, description, children }) {
             </Box>
           </Toolbar>
         </AppBar>
+
         <Container sx={classes.main} component="main">
           {children}
         </Container>
+
         <Box sx={classes.footer} component="footer">
-          <Box></Box>
+          <Box />
+
           <Box>
             <h1>Contato</h1>
           </Box>
+
           <Box>
             <Image
               src="/images/logo-rodape.svg"
