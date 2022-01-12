@@ -15,6 +15,10 @@ const signToken = (user) => {
   );
 };
 
+const decodeToken = (token) => {
+  return jwt.decode(token);
+};
+
 const isAuth = async (req, res, next) => {
   const { authorization } = req.headers;
   if (authorization) {
@@ -41,4 +45,4 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
-export { signToken, isAuth, isAdmin };
+export { signToken, decodeToken, isAuth, isAdmin };

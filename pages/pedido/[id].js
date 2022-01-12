@@ -26,6 +26,7 @@ import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
 import { Store } from '../../utils/Store';
 import { getError } from '../../utils/error';
+import { decodeToken } from '../../utils/auth';
 import classes from '../../utils/classes';
 
 function reducer(state, action) {
@@ -163,8 +164,36 @@ function Order({ params }) {
       });
   }
 
+  async function payWithCash() {
+    try {
+      const user = decodeToken(userInfo.token);
+
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/pay`,
+        {
+          id: order._id,
+          status: 'PAID',
+          email_address: user.email,
+        },
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+
+      dispatch({ type: 'PAY_SUCCESS', payload: data });
+
+      enqueueSnackbar('Pedido Pago', { variant: 'success' });
+    } catch (err) {
+      dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+
+      enqueueSnackbar(getError(err), { variant: 'error' });
+    }
+  }
+
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
+      console.log(details);
       try {
         dispatch({ type: 'PAY_REQUEST' });
 
@@ -215,12 +244,16 @@ function Order({ params }) {
 
   function payWithEther() {
     // Endereço da carteira do Iagor
-    const to = "0xB88008609C6b9F4167F581d504AFA21197a1D2D0";
+    const to = '0xB88008609C6b9F4167F581d504AFA21197a1D2D0';
 
     // FIXME fazer ajustes necessários da cotação do real quando for realizar o pagamento
     const valueEther = 0.1;
 
-    window.open(`https://pay.buildship.dev/to/${to}?value=${valueEther}`,'payment','width=500, height=800');
+    window.open(
+      `https://pay.buildship.dev/to/${to}?value=${valueEther}`,
+      'payment',
+      'width=500, height=800'
+    );
   }
 
   return (
@@ -362,55 +395,63 @@ function Order({ params }) {
                     </Grid>
                   </Grid>
                 </ListItem>
-                <Typography
-                  variant="h1"
-                  component="h3"
-                  style={{
-                    backgroundColor: "red",
-                    color: "white",
-                    textAlign: "center",
-                    fontWeight: "bold"
-                  }}
-                >
-                  Atenção, não realize pagamentos por essa plataforma foram
-                  implementados somente para fins educativos, não nos responsabilizamos
-                  por nenhuma transação feita.
-                </Typography>
+                {paymentMethod !== 'Dinheiro' && (
+                  <Typography
+                    variant="h1"
+                    component="h3"
+                    style={{
+                      backgroundColor: 'red',
+                      color: 'white',
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Atenção, não realize pagamentos por essa plataforma foram
+                    implementados somente para fins educativos, não nos
+                    responsabilizamos por nenhuma transação feita.
+                  </Typography>
+                )}
                 {!isPaid && (
                   <ListItem>
-                    {
-                      paymentMethod === "PayPal" && (
-                          isPending ? (
-                            <CircularProgress />
-                          ) : (
-                            <Box sx={classes.fullWidth}>
-                              <PayPalButtons
-                                createOrder={createOrder}
-                                onApprove={onApprove}
-                                onError={onError}
-                              />
-                            </Box>
-                          )
-                      )
-                    }
-                    {
-                      paymentMethod === "CryptoMoeda" && (
-                        <Button
-                          onClick={payWithEther}
-                          variant="contained"
-                          sx={{
-                            width: "100%"
-                          }}
-                        >
-                          <Image
-                            src="/images/ethereum.svg"
-                            alt="Pagar com Etherum"
-                            width={50}
-                            height={50}
+                    {paymentMethod === 'PayPal' &&
+                      (isPending ? (
+                        <CircularProgress />
+                      ) : (
+                        <Box sx={classes.fullWidth}>
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
                           />
-                        </Button>
-                      )
-                    }
+                        </Box>
+                      ))}
+                    {paymentMethod === 'CryptoMoeda' && (
+                      <Button
+                        onClick={payWithEther}
+                        variant="contained"
+                        sx={{
+                          width: '100%',
+                        }}
+                      >
+                        <Image
+                          src="/images/ethereum.svg"
+                          alt="Pagar com Etherum"
+                          width={50}
+                          height={50}
+                        />
+                      </Button>
+                    )}
+                    {paymentMethod === 'Dinheiro' && (
+                      <Button
+                        onClick={payWithCash}
+                        variant="contained"
+                        sx={{
+                          width: '100%',
+                        }}
+                      >
+                        Pagar com Dinheiro
+                      </Button>
+                    )}
                   </ListItem>
                 )}
                 {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
