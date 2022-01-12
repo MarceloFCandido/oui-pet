@@ -198,7 +198,7 @@ export default function ProductScreen(props) {
                 <Typography>
                   <strong>{review.name}</strong>
                 </Typography>
-                <Typography>{review.createdAt.substring(0, 10)}</Typography>
+                <Typography>{review.updatedAt.substring(0, 10)}</Typography>
               </Grid>
               <Grid item>
                 <Rating value={review.rating} readOnly></Rating>
