@@ -12,6 +12,7 @@ function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <SnackbarProvider
+        maxSnack={1}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <StoreProvider>
