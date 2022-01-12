@@ -24,7 +24,7 @@ function ReviewsPanel({ reviews }) {
         </Grid>
 
         <Grid item>
-          <Rating value={rating} readOnly />
+          <Rating value={rating} readOnly sx={classes.rating} />
 
           <Typography sx={{ textAlign: 'right' }}>{comment}</Typography>
         </Grid>
