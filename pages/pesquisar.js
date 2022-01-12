@@ -219,7 +219,7 @@ export default function Search(props) {
               </Select>
             </Grid>
           </Grid>
-          <Grid sx={classes.section} container spacing={3}>
+          <Grid sx={[classes.section, classes.center]} container spacing={3}>
             {products.map((product) => (
               <Grid item md={4} key={product.name}>
                 <ProductItem
@@ -230,7 +230,7 @@ export default function Search(props) {
             ))}
           </Grid>
           <Pagination
-            sx={classes.section}
+            sx={[classes.section, classes.flex, classes.center]}
             defaultPage={parseInt(query.page || '1')}
             count={pages}
             onChange={pageHandler}
