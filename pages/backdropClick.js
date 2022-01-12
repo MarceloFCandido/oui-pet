@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
-
 export default function BackDropClick() {
-  const router = useRouter();
-
-  router.back();
+  if (typeof window !== 'undefined') {
+    window.history.back();
+  }
 
   return <></>;
 }
