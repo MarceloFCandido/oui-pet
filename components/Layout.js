@@ -133,6 +133,12 @@ export default function Layout({ title, description, children }) {
     }
   };
 
+  const submitEnter = (e) => {
+    if (e.key === 'Enter') {
+      submitHandler(e);
+    }
+  };
+
   const logoutClickHandler = () => {
     setAnchorEl(null);
     dispatch({ type: 'USER_LOGOUT' });
@@ -224,11 +230,13 @@ export default function Layout({ title, description, children }) {
                     placeholder="Pesquisar"
                     color="primary"
                     onChange={queryChangeHandler}
+                    onKeyPress={submitEnter}
                   />
                   <IconButton
                     type="submit"
                     sx={classes.searchButton}
                     aria-label="search"
+                    onClick={submitHandler}
                   >
                     <SearchIcon />
                   </IconButton>
