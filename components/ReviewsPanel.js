@@ -8,7 +8,7 @@ import {
 import classes from '../utils/classes';
 
 function ReviewsPanel({ reviews }) {
-  return (reviews.map(({
+  return (reviews?.map(({
     _id,
     name,
     updatedAt,
