@@ -19,6 +19,7 @@ import {
 import { useSnackbar } from 'notistack';
 import Layout from '../../components/Layout';
 import Form from '../../components/Form';
+import ReviewsPanel from '../../components/ReviewsPanel';
 import db from '../../utils/db';
 import { getError } from '../../utils/error';
 import Product from '../../models/Product';
@@ -111,6 +112,7 @@ export default function ProductScreen(props) {
           </Link>
         </NextLink>
       </Box>
+
       <Grid container spacing={1}>
         <Grid item md={6} xs={12}>
           <Image
@@ -121,6 +123,7 @@ export default function ProductScreen(props) {
             layout="responsive"
           />
         </Grid>
+
         <Grid item md={3} xs={12}>
           <List>
             <ListItem>
@@ -128,23 +131,28 @@ export default function ProductScreen(props) {
                 {product.name}
               </Typography>
             </ListItem>
+
             <ListItem>
               <Typography>Categoria: {product.category}</Typography>
             </ListItem>
+
             <ListItem>
               <Typography>Marca: {product.brand}</Typography>
             </ListItem>
+
             <ListItem>
               <Rating value={product.rating} readOnly></Rating>
               <Link href="#reviews">
                 <Typography>({product.numReviews} avaliações)</Typography>
               </Link>
             </ListItem>
+
             <ListItem>
               <Typography>Descrição: {product.description}</Typography>
             </ListItem>
           </List>
         </Grid>
+
         <Grid item md={3} xs={12}>
           <Card>
             <List>
@@ -153,16 +161,19 @@ export default function ProductScreen(props) {
                   <Grid item xs={6}>
                     <Typography>Preço</Typography>
                   </Grid>
+
                   <Grid item xs={6}>
                     <Typography>R$ {product.price}</Typography>
                   </Grid>
                 </Grid>
               </ListItem>
+
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
                     <Typography>Status</Typography>
                   </Grid>
+
                   <Grid item xs={6}>
                     <Typography>
                       {product.countInStock > 0 ? 'Em estoque' : 'Indisponível'}
@@ -170,6 +181,7 @@ export default function ProductScreen(props) {
                   </Grid>
                 </Grid>
               </ListItem>
+
               <ListItem>
                 <Button
                   fullWidth
@@ -184,29 +196,18 @@ export default function ProductScreen(props) {
           </Card>
         </Grid>
       </Grid>
+
       <List>
         <ListItem>
           <Typography name="reviews" id="reviews" variant="h2">
             Avaliações dos clientes
           </Typography>
         </ListItem>
+
         {reviews.length === 0 && <ListItem>Sem avaliação</ListItem>}
-        {reviews.map((review) => (
-          <ListItem key={review._id}>
-            <Grid container>
-              <Grid item sx={classes.reviewItem}>
-                <Typography>
-                  <strong>{review.name}</strong>
-                </Typography>
-                <Typography>{review.updatedAt.substring(0, 10)}</Typography>
-              </Grid>
-              <Grid item>
-                <Rating value={review.rating} readOnly></Rating>
-                <Typography>{review.comment}</Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))}
+
+        <ReviewsPanel reviews={reviews} />
+
         <ListItem>
           {userInfo ? (
             <Form onSubmit={submitHandler}>
@@ -214,6 +215,7 @@ export default function ProductScreen(props) {
                 <ListItem>
                   <Typography variant="h2">Sua Avaliação</Typography>
                 </ListItem>
+
                 <ListItem>
                   <TextField
                     multiline
@@ -225,6 +227,7 @@ export default function ProductScreen(props) {
                     onChange={(e) => setComment(e.target.value)}
                   />
                 </ListItem>
+
                 <ListItem>
                   <Rating
                     name="simple-controlled"
@@ -232,6 +235,7 @@ export default function ProductScreen(props) {
                     onChange={(e) => setRating(e.target.value)}
                   />
                 </ListItem>
+
                 <ListItem>
                   <Button
                     type="submit"
