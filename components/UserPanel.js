@@ -27,6 +27,12 @@ function UserPanel(props) {
               <ListItemText primary="Histórico de Pedidos"></ListItemText>
             </ListItem>
           </NexLink>
+
+          <NexLink href="/avaliacoes" passHref>
+            <ListItem selected={current === 'avaliacoes'} button component="a">
+              <ListItemText primary="Avaliações"></ListItemText>
+            </ListItem>
+          </NexLink>
         </List>
       </Card>
     </Grid>
