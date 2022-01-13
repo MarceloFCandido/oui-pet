@@ -1,38 +1,94 @@
 # Oui Pet
 
+<p align="center">
+  <img src="./public/images/logo.svg" width="200px"/>
+</p>
+
 Projeto final da discilina de Programação Web 2021/2 do CEFET-MG campus 2.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+O objetivo do projeto é desenvolver um e-commerce de produtos para animais com a funcionalidade de realizar pagamentos via criptomoedas.
 
-## Getting Started
+O que foi desenvolvido na entrega do Front-End:
 
-First, run the development server:
+- Tela de cadastro de usuários e produtos.
+- Checkout completo em diferentes tipos de pagamentos.
+- Painel de administrador e edição de usuários e produtos.
+- Página de pesquisar produtos.
+- Avaliação dos produtos pelo usuário
+- Página de perfil para os clientes
 
-```bash
-npm run dev
-# or
-yarn dev
+<br>
+
+# Integrantes:
+
+Gabriel Arrighi Silva
+
+Iagor de Sousa Penaranda Silva
+
+Marcelo Lopes de Macedo Ferreira Candido
+
+<br>
+
+# Instalação
+
+## Arquivo .env:
+
+Crie um arquivo com o nome .env na raiz do projeto com o seguinte conteúdo:
+
+```
+MONGODB_URI=mongodb://127.0.0.1:27017/oui-pet
+JWT_SECRET=oui-pet
+PAYPAL_CLIENT_ID=AQVUYr85_EGhCFRfBzYPtN8r-xAcLzME9RPT2DjLKUH7DImgGDeYhpNog5zGK7cszl7DfrH0UWW5GI5v
+CLOUDINARY_CLOUD_NAME=dnb0h7nxh
+CLOUDINARY_API_KEY='326728717932598'
+CLOUDINARY_API_SECRET=wEmeP1MprjRCBiS3y2nk7vuqXaw
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Instalação do MongoDB:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Linux:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+sudo apt update
+sudo apt install mongodb-org
+sudo systemctl start mongod.service
+```
 
-## Learn More
+Windowns 10:
 
-To learn more about Next.js, take a look at the following resources:
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+<br>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Execute os comandos:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+npm i
+
+npm run dev
+```
+
+<br>
+
+## Populando o banco de dados:
+
+Acesse a página:
+
+```
+localhost:3000/api/seed
+```
+
+<br>
+
+## Usuário ADM:
+
+```
+e-mail: admin@email.com
+
+senha: 123456
+```
