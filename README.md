@@ -1,7 +1,10 @@
 # Oui Pet
 
 <p align="center">
-  <img src="./public/images/logo.svg" width="200px"/>
+  <a href="https://oui-pet-rho.vercel.app/" target="_blanc"><img src="./public/images/logo.svg" width="200px"/></a>
+  <br>
+  Deploy feito em:
+  <a href="https://oui-pet-rho.vercel.app/" target="_blanc"> Link</a>
 </p>
 
 Projeto final da discilina de Programação Web 2021/2 do CEFET-MG campus 2.
@@ -58,8 +61,10 @@ sudo systemctl start mongod.service
 
 Windowns 10:
 
-```
+Faça o download da versão community e sigas nas etapas
 
+```
+https://www.mongodb.com/try/download/community
 
 ```
 
