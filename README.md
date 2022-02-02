@@ -28,7 +28,7 @@ Gabriel Arrighi Silva
 
 Iagor de Sousa Penaranda Silva
 
-Marcelo Lopes de Macedo Ferreira Candido
+Marcelo Lopes de Macedo Ferreira Cândido
 
 <br>
 
