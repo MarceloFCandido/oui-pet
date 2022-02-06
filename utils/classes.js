@@ -94,6 +94,10 @@ const classes = {
   center: {
     justifyContent: 'center',
   },
+  border: {
+    border: '5px solid blue',
+    borderRadius: '5px',
+  },
 };
 
 export default classes;

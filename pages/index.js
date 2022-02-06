@@ -42,7 +42,7 @@ export default function Home(props) {
             href={`/produto/${product.slug}`}
             passHref
           >
-            <Link sx={[classes.flex, classes.center]}>
+            <Link sx={[classes.flex, classes.center, classes.border]}>
               <Image
                 src={product.featuredImage}
                 alt={product.name}
