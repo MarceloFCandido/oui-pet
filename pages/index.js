@@ -48,6 +48,7 @@ export default function Home(props) {
                 alt={product.name}
                 width={1200}
                 height={300}
+                objectFit='contain'
               />
             </Link>
           </NextLink>
