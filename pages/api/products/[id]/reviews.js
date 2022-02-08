@@ -10,14 +10,14 @@ const handler = nextConnect({
 });
 
 handler.get(async (req, res) => {
-  db.connect();
+  await db.connect();
 
   const product = await Product.findById(req.query.id);
 
-  db.disconnect();
+  await db.disconnect();
 
   if (product) {
-    res.send(product.reviews);
+    res.status(200).send(product.reviews);
   } else {
     res.status(404).send({ message: 'Product not found' });
   }
