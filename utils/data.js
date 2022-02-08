@@ -59,7 +59,7 @@ const data = {
     {
       name: 'Arranhador felino',
       slug: 'arranhador-felino',
-      category: 'brinquedo',
+      category: 'Brinquedo',
       image: '/images/aranhador.jpg',
       isFeatured: true,
       featuredImage: '/images/aranhador.jpg',
@@ -73,7 +73,7 @@ const data = {
     {
       name: 'Mordedor canino',
       slug: 'mordedor-canino',
-      category: 'brinquedo',
+      category: 'Brinquedo',
       image: '/images/mordedor.jpg',
       price: 8,
       brand: 'Dog',
@@ -85,7 +85,7 @@ const data = {
     {
       name: 'Porta ração',
       slug: 'porta-racao',
-      category: 'brinquedo',
+      category: 'Brinquedo',
       image: '/images/bolinha-racao.jpg',
       price: 10,
       brand: 'Ração',
@@ -97,7 +97,7 @@ const data = {
     {
       name: 'Casa para felinos arranhar',
       slug: 'casa-felino-arranhador',
-      category: 'brinquedo',
+      category: 'Brinquedo',
       image: '/images/casa-arranhadora.jpg',
       price: 50,
       brand: 'Cat',
