@@ -11,20 +11,30 @@ import countries from 'country-list-js';
 const emptyForm = {
   fullName: "",
   address: "",
+  country: "empty",
   city: "",
   postalCode: "",
-  country: ""
 };
 
 export default function Shipping() {
-
   const [form, setForm] = useState(emptyForm);
 
-  const updateProperty = ({ target: { value, name } }) => {
+  const updateProperty = (key, value) => {
     setForm({
       ...form,
-      [name]: value
+      [key]: value
     });
+  }
+
+  const updateField = ({ target: { value, name } }) => {
+    updateProperty(name, value);
+  };
+
+  const updateCEP = ({ target: { value, name } }) => {
+    if (form.country === "Brazil" && form.postalCode.length === 8){
+      // TODO use CEP API
+      updateProperty(name, value);
+    } else updateProperty(name, value);
   }
 
   const router = useRouter();
@@ -41,7 +51,13 @@ export default function Shipping() {
       router.push('/login?redirect=/comprar');
     }
 
-    setForm(shippingAddress);
+    setForm({
+      fullName: shippingAddress.fullName || emptyForm.fullName,
+      address: shippingAddress.address || emptyForm.address,
+      country: shippingAddress.country || emptyForm.country,
+      city: shippingAddress.city || emptyForm.city,
+      postalCode: shippingAddress.postalCode || emptyForm.postalCode,
+    });
   }, [router, userInfo, shippingAddress]);
 
   const submitHandler = () => {
@@ -73,7 +89,7 @@ export default function Shipping() {
               name="fullName"
               label="Nome completo"
               required
-              onChange={updateProperty}
+              onChange={updateField}
               value={form.fullName}
             />
           </ListItem>
@@ -85,9 +101,13 @@ export default function Shipping() {
               name="country"
               label="País"
               required
-              onChange={updateProperty}
+              onChange={updateField}
               value={form.country}
+              defaultValue="empty"
             >
+              <MenuItem key="empty_value" value="empty">
+                Selecione...
+              </MenuItem>
               {countries.names().sort().map((country, idx) => (
                 <MenuItem
                   key={`${country}_${idx}`}
@@ -105,7 +125,7 @@ export default function Shipping() {
               name="postalCode"
               label="CEP"
               required
-              onChange={updateProperty}
+              onChange={updateCEP}
               value={form.postalCode}
             />
           </ListItem>
@@ -116,7 +136,7 @@ export default function Shipping() {
               name="city"
               label="Cidade"
               required
-              onChange={updateProperty}
+              onChange={updateField}
               value={form.city}
             />
           </ListItem>
@@ -127,7 +147,7 @@ export default function Shipping() {
               name="address"
               label="Endereço"
               required
-              onChange={updateProperty}
+              onChange={updateField}
               value={form.address}
             />
           </ListItem>
