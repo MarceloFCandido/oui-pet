@@ -7,6 +7,7 @@ import { Store } from '../utils/Store';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Form from '../components/Form';
 import countries from 'country-list-js';
+import axios from 'axios';
 
 const emptyForm = {
   fullName: "",
@@ -14,6 +15,7 @@ const emptyForm = {
   country: "empty",
   city: "",
   postalCode: "",
+  streetNumber: ""
 };
 
 export default function Shipping() {
@@ -30,10 +32,16 @@ export default function Shipping() {
     updateProperty(name, value);
   };
 
-  const updateCEP = ({ target: { value, name } }) => {
-    if (form.country === "Brazil" && form.postalCode.length === 8){
-      // TODO use CEP API
-      updateProperty(name, value);
+  const updateCEP = async ({ target: { value, name } }) => {
+    if (form.country === "Brazil" && value.length === 8){
+      const { data } = await axios.get(`https://viacep.com.br/ws/${value}/json/`)
+
+      setForm({
+        ...form,
+        city: `${data.localidade} - ${data.uf}`,
+        address: `${data.logradouro}, ${data.bairro}, <NUMERO>`,
+        postalCode: value
+      });
     } else updateProperty(name, value);
   }
 
