@@ -1,10 +1,10 @@
 # Oui Pet
 
 <p align="center">
-  <a href="https://oui-pet-gim.vercel.app" target="_blanc"><img src="./public/images/logo.svg" width="200px"/></a>
-  <br>
-  Deploy feito em:
-  <a href="https://oui-pet-gim.vercel.app" target="_blanc"> Link</a>
+  <a href="https://oui-pet-gim.vercel.app" target="_blanc" style="display: block">
+    <img src="./public/images/logo.svg" width="200px"/>
+  </a>
+  Deploy feito na <a href="https://oui-pet-gim.vercel.app" target="_blanc">Vercel</a>
 </p>
 
 Projeto final da disciplina de Programação Web 2021/2 do CEFET-MG campus 2.
@@ -22,11 +22,20 @@ O que foi desenvolvido na entrega do Front-End:
 
 ## Integrantes
 
-Gabriel Arrighi Silva
-
-Iagor de Sousa Penaranda Silva
-
-Marcelo Lopes de Macedo Ferreira Cândido
+<div style="display: flex; justify-content: space-evenly">
+  <a href="https://github.com/AllrightIsHere" align="center" style="border-radius: 8px; background-color: rgba(0, 0, 0, 0.1); overflow: hidden;">
+    <img src="https://github.com/AllrightIsHere.png" height="auto" width="200" alt="Gabriel Arrighi Silva">
+    <h3>Gabriel Arrighi</h3>
+  </a>
+  <a href="https://github.com/IagorSs" align="center" style="border-radius: 8px; background-color: rgba(0, 0, 0, 0.1); overflow: hidden;">
+    <img src="https://github.com/IagorSs.png" height="auto" width="200" alt="Iagor de Sousa Penaranda Silva">
+    <h3>Iagor de Sousa</h3>
+  </a>
+  <a href="https://github.com/MarceloFCandido" align="center" style="border-radius: 8px; background-color: rgba(0, 0, 0, 0.1); overflow: hidden;">
+    <img src="https://github.com/MarceloFCandido.png" height="auto" width="200" alt="Marcelo Lopes de Macedo Ferreira Cândido">
+    <h3>Marcelo Lopes</h3>
+  </a>
+</div>
 
 ## Instalação
 
