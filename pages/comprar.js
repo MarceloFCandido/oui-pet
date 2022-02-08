@@ -1,21 +1,31 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, List, ListItem, TextField, Typography, Select, MenuItem } from '@mui/material';
 import Cookies from 'js-cookie';
-import { Controller, useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Form from '../components/Form';
-import country from 'country-list-js';
+import countries from 'country-list-js';
+
+const emptyForm = {
+  fullName: "",
+  address: "",
+  city: "",
+  postalCode: "",
+  country: ""
+};
 
 export default function Shipping() {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue,
-  } = useForm();
+
+  const [form, setForm] = useState(emptyForm);
+
+  const updateProperty = ({ target: { value, name } }) => {
+    setForm({
+      ...form,
+      [name]: value
+    });
+  }
 
   const router = useRouter();
 
@@ -30,28 +40,19 @@ export default function Shipping() {
     if (!userInfo) {
       router.push('/login?redirect=/comprar');
     }
-    setValue('fullName', shippingAddress.fullName);
-    setValue('address', shippingAddress.address);
-    setValue('city', shippingAddress.city);
-    setValue('postalCode', shippingAddress.postalCode);
-    setValue('country', shippingAddress.country);
-  }, []);
 
-  const submitHandler = ({ fullName, address, city, postalCode, country }) => {
+    setForm(shippingAddress);
+  }, [router, userInfo, shippingAddress]);
+
+  const submitHandler = () => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, postalCode, country },
+      payload: form,
     });
 
     Cookies.set(
       'shippingAddress',
-      JSON.stringify({
-        fullName,
-        address,
-        city,
-        postalCode,
-        country,
-      })
+      JSON.stringify(form)
     );
 
     router.push('/pagamento');
@@ -60,160 +61,75 @@ export default function Shipping() {
   return (
     <Layout title="Endereço de Entrega">
       <CheckoutWizard activeStep={1} />
-      <Form onSubmit={handleSubmit(submitHandler)}>
+      <Form onSubmit={submitHandler}>
         <Typography component="h1" variant="h1">
           Endereço de entrega
         </Typography>
         <List>
           <ListItem>
-            <Controller
+            <TextField
+              variant="outlined"
+              fullWidth
               name="fullName"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="fullName"
-                  label="Nome completo"
-                  error={Boolean(errors.fullName)}
-                  helperText={
-                    errors.fullName
-                      ? errors.fullName.type === 'minLength'
-                        ? 'Nome completo maior que 1'
-                        : 'Nome completo é obrigatório'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
+              label="Nome completo"
+              required
+              onChange={updateProperty}
+              value={form.fullName}
+            />
           </ListItem>
           {/* FIXME Esse label não funciona bem com o componente 'Select' */}
           <ListItem>
-            <Controller
+            <Select
+              variant="outlined"
+              fullWidth
               name="country"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <Select
-                  variant="outlined"
-                  fullWidth
-                  id="country"
-                  label="País"
-                  error={Boolean(errors.country)}
-                  helperText={
-                    errors.country
-                      ? errors.country.type === 'minLength'
-                        ? 'País maior que 1'
-                        : 'País é obrigatório'
-                      : ''
-                  }
-                  {...field}
+              label="País"
+              required
+              onChange={updateProperty}
+              value={form.country}
+            >
+              {countries.names().sort().map((country, idx) => (
+                <MenuItem
+                  key={`${country}_${idx}`}
+                  value={country}
                 >
-                  {country.names().sort().map((country, idx) => (
-                    <MenuItem
-                      key={`${country}_${idx}`}
-                      value={country}
-                    >
-                      {country}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            ></Controller>
+                  {country}
+                </MenuItem>
+              ))}
+            </Select>
           </ListItem>
           <ListItem>
-            <Controller
+            <TextField
+              variant="outlined"
+              fullWidth
               name="postalCode"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="postalCode"
-                  label="CEP"
-                  error={Boolean(errors.postalCode)}
-                  helperText={
-                    errors.postalCode
-                      ? errors.postalCode.type === 'minLength'
-                        ? 'CEP maior que 1'
-                        : 'CEP é obrigatório'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
+              label="CEP"
+              required
+              onChange={updateProperty}
+              value={form.postalCode}
+            />
           </ListItem>
           <ListItem>
-            <Controller
+            <TextField
+              variant="outlined"
+              fullWidth
               name="city"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="city"
-                  label="Cidade"
-                  error={Boolean(errors.city)}
-                  helperText={
-                    errors.city
-                      ? errors.city.type === 'minLength'
-                        ? 'Cidade é maior que 1'
-                        : 'Cidade é obrigatória'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
+              label="Cidade"
+              required
+              onChange={updateProperty}
+              value={form.city}
+            />
           </ListItem>
           <ListItem>
-            <Controller
+            <TextField
+              variant="outlined"
+              fullWidth
               name="address"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: true,
-                minLength: 2,
-              }}
-              render={({ field }) => (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="address"
-                  label="Endereço"
-                  error={Boolean(errors.address)}
-                  helperText={
-                    errors.address
-                      ? errors.address.type === 'minLength'
-                        ? 'Endereço maior que 1'
-                        : 'Endereço é obrigatório'
-                      : ''
-                  }
-                  {...field}
-                ></TextField>
-              )}
-            ></Controller>
+              label="Endereço"
+              required
+              onChange={updateProperty}
+              value={form.address}
+            />
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
