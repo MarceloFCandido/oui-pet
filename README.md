@@ -7,7 +7,7 @@
   <a href="https://oui-pet-gim.vercel.app" target="_blanc"> Link</a>
 </p>
 
-Projeto final da discilina de Programação Web 2021/2 do CEFET-MG campus 2.
+Projeto final da disciplina de Programação Web 2021/2 do CEFET-MG campus 2.
 
 O objetivo do projeto é desenvolver um e-commerce de produtos para animais com a funcionalidade de realizar pagamentos via criptomoedas.
 
@@ -20,9 +20,7 @@ O que foi desenvolvido na entrega do Front-End:
 - Avaliação dos produtos pelo usuário
 - Página de perfil para os clientes
 
-<br>
-
-# Integrantes:
+## Integrantes
 
 Gabriel Arrighi Silva
 
@@ -30,70 +28,46 @@ Iagor de Sousa Penaranda Silva
 
 Marcelo Lopes de Macedo Ferreira Cândido
 
-<br>
+## Instalação
 
-# Instalação
+### MongoDB
 
-## Arquivo .env:
+#### Linux
 
-Crie um arquivo com o nome .env na raiz do projeto com o seguinte conteúdo:
-
-```
-MONGODB_URI=mongodb://127.0.0.1:27017/oui-pet
-JWT_SECRET=oui-pet
-PAYPAL_CLIENT_ID=AQVUYr85_EGhCFRfBzYPtN8r-xAcLzME9RPT2DjLKUH7DImgGDeYhpNog5zGK7cszl7DfrH0UWW5GI5v
-CLOUDINARY_CLOUD_NAME=dnb0h7nxh
-CLOUDINARY_API_KEY='326728717932598'
-CLOUDINARY_API_SECRET=wEmeP1MprjRCBiS3y2nk7vuqXaw
+```bash
+$sudo apt update
+$sudo apt install mongodb-org
+$sudo systemctl start mongod.service
 ```
 
-<br>
+#### Windows 10
 
-## Instalação do MongoDB:
+Faça o download da [versão community](https://www.mongodb.com/try/download/community) e sigas nas etapas
 
-Linux:
+### Dependências do projeto
 
-```
-sudo apt update
-sudo apt install mongodb-org
-sudo systemctl start mongod.service
+```bash
+$npm install
 ```
 
-Windowns 10:
+## Configuração
 
-Faça o download da versão community e sigas nas etapas
+### Arquivo .env
 
-```
-https://www.mongodb.com/try/download/community
+O projeto tem um arquivo `.env.example`, a partir dele você deve criar o arquivo `.env` e preencher os valores de cada uma das variáveis.
 
-```
+## Testando se tudo deu certo
 
-<br>
+**DEPOIS** de ter feito todos os passos anteriores você pode rodar o comando abaixo para começar a rodar o projeto
 
-## Execute os comandos:
-
-```
-npm i
-
-npm run dev
+```bash
+$npm run dev
 ```
 
-<br>
+Se tiver dado tudo certo você poderá acessar o site no [localhost:3000](http://localhost:3000)
 
-## Populando o banco de dados:
+## Populando o banco de dados
 
-Acesse a página:
+Acessar a rota [/api/seed](http://localhost:3000/api/seed) para popular o banco com dados iniciais.
 
-```
-localhost:3000/api/seed
-```
-
-<br>
-
-## Usuário ADM:
-
-```
-e-mail: admin@email.com
-
-senha: 123456
-```
+Os dados que serão usados para popular a base podem ser encontrados em [utils/data.js](./utils/data.js).
