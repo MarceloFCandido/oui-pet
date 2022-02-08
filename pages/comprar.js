@@ -85,7 +85,7 @@ export default function Shipping() {
   return (
     <Layout title="Endereço de Entrega">
       <CheckoutWizard activeStep={1} />
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} method="post">
         <Typography component="h1" variant="h1">
           Endereço de entrega
         </Typography>
