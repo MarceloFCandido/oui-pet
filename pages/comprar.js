@@ -68,7 +68,9 @@ export default function Shipping() {
     });
   }, [router, userInfo, shippingAddress]);
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+    
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
       payload: form,
